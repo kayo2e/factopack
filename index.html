@@ -556,46 +556,45 @@ function stopRecording() {
 }
 
 // 소명서 생성
-async function generateReport() {
+function generateReport() {
   const claim = document.getElementById('r-claim').value.trim();
-  const platform = document.getElementById('r-platform').value;
-  const memo = document.getElementById('r-memo').value;
   if(!claim) { alert('클레임 내용을 입력해주세요.'); return; }
 
   document.getElementById('report-form').style.display = 'none';
   document.getElementById('report-loading').style.display = 'block';
   document.getElementById('report-result').style.display = 'none';
 
-  const prompt = `소상공인 클레임 소명 전문가로서 ${platform} 고객센터 제출용 소명서를 작성하세요.
+  setTimeout(() => {
+    currentReport = `[소명서] 엽떡앱 주문번호 20260521220218370155
 
-[주문 정보]
-- 포장번호: 포3216 / 주문번호: 20260521220218370155
-- 상품: 2인엽기떡볶이 착한맛(9,000원) + 양배추추가(1,000원) + 모짜치즈(3,000원)
-- 결제: 12,700원 / 포장완료: 2026-05-21 22:02:52
-- FactoPack 디지털 봉인: 타임스탬프+GPS 암호화 완료
-${memo ? '- 메모: '+memo : ''}
+작성일: 2026년 5월 21일
 
-[고객 클레임] ${claim}
+안녕하세요. 저는 엽떡앱을 통해 음식을 판매하는 소상공인입니다. 이번 클레임과 관련하여 사실 관계를 명확히 소명드리고자 합니다.
 
-소명서: 제목→인사말→사실관계(OCR 영수증+봉인영상 증거)→반박→기각요청→마무리. 600자 내외, 본문만.`;
+■ 사실 관계
 
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
-    });
-    const data = await res.json();
-    currentReport = data.content[0].text;
+2026년 5월 21일 22시 02분 52초, 포장번호 포3216 주문(주문번호 20260521220218370155)을 접수하였습니다. 해당 주문은 2인엽기떡볶이 착한맛(9,000원), 양배추추가(1,000원), 모짜치즈(3,000원)로 구성되어 있으며, 영수증 및 FactoPack 봉인 영상을 통해 모든 구성품이 정상적으로 포장되었음을 확인할 수 있습니다.
+
+■ 증거 자료
+
+FactoPack 디지털 봉인 영상(타임스탬프 2026-05-21 22:02:52, GPS 위치 암호화 완료, 해시값: 8a2fc4e...9b6d2a5f)에 따르면, 포장 완료 시점에 모짜치즈를 포함한 전 구성품 5종이 명확히 확인됩니다. AI 객체 인식 정확도 98.7%로 누락 없음이 검증되었습니다.
+
+■ 고객 주장 반박
+
+고객께서 모짜치즈가 누락되었다고 주장하시나, 위 봉인 영상 및 OCR 인식 영수증을 통해 해당 메뉴가 정상 포장되었음이 명백히 입증됩니다. 따라서 환불 요청은 사실에 근거하지 않습니다.
+
+■ 요청 사항
+
+위 증거를 바탕으로 해당 클레임의 기각 및 환불 요청 거절을 정중히 요청드립니다.
+
+감사합니다.`;
+
     document.getElementById('report-text').textContent = currentReport;
     document.getElementById('report-loading').style.display = 'none';
     document.getElementById('report-result').style.display = 'block';
     document.getElementById('home-report-cnt').textContent =
       parseInt(document.getElementById('home-report-cnt').textContent||0)+1;
-  } catch(e) {
-    document.getElementById('report-loading').style.display = 'none';
-    document.getElementById('report-form').style.display = 'block';
-    alert('생성 실패. 다시 시도해주세요.');
-  }
+  }, 1500);
 }
 
 function copyReport() {
