@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>FactoPack</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1D9E75; --green-dark:#0F6E56; --green-light:#E1F5EE; --green-mid:#5DCAA5;
+  --amber:#F5A623; --amber-light:#FEF3DC; --red:#E53E3E; --red-light:#FEE2E2;
+  --bg:#F5F4F0; --surface:#FFFFFF; --border:rgba(0,0,0,0.08); --border-strong:rgba(0,0,0,0.14);
+  --text:#1A1A1A; --text-muted:#6B6B6B; --text-faint:#A0A0A0;
+  --r:12px; --rs:8px; --mono:'Space Mono',monospace;
+  --tab-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+
+/* ── 데스크탑 레이아웃 ── */
+.desktop-shell{display:none;}
+@media(min-width:700px){
+  html,body{overflow:auto;}
+  .desktop-shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh;}
+  .mobile-shell{display:none!important;}
+}
+
+/* ── 사이드바 (데스크탑) ── */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;}
+.logo-wrap{padding:28px 24px 20px;border-bottom:1px solid var(--border);}
+.logo-mark{width:36px;height:36px;border-radius:10px;overflow:hidden;margin-bottom:12px;}
+.logo-mark img{width:36px;height:36px;object-fit:cover;}
+.logo-name{font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:-0.5px;}
+.logo-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:2px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;font-size:14px;color:var(--text-muted);transition:all .15s;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover{background:var(--bg);color:var(--text);}
+.nav-item.active{background:var(--green-light);color:var(--green-dark);font-weight:500;}
+.nav-icon{width:20px;height:20px;flex-shrink:0;opacity:.7;}
+.nav-item.active .nav-icon{opacity:1;}
+.sidebar-footer{padding:16px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--text-faint);font-family:var(--mono);}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── 메인 (데스크탑) ── */
+.d-main{display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.page-title{font-size:15px;font-weight:500;}
+.page-badge{font-size:11px;color:var(--text-muted);font-family:var(--mono);background:var(--bg);padding:4px 10px;border-radius:20px;}
+.d-content{flex:1;padding:32px;max-width:900px;width:100%;}
+
+/* ── 모바일 레이아웃 ── */
+.mobile-shell{display:flex;flex-direction:column;height:100vh;}
+.m-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.m-logo{display:flex;align-items:center;gap:10px;}
+.m-logo-img{width:30px;height:30px;border-radius:8px;overflow:hidden;}
+.m-logo-img img{width:30px;height:30px;object-fit:cover;}
+.m-logo-name{font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:-.5px;}
+.m-ai-badge{font-size:10px;background:var(--green-light);color:var(--green-dark);padding:3px 8px;border-radius:20px;font-weight:500;}
+.m-content{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;}
+.m-tabbar{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:stretch;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom);}
+.m-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--text-faint);font-size:10px;font-family:inherit;transition:color .15s;padding:0;}
+.m-tab.active{color:var(--green);}
+.m-tab svg{width:22px;height:22px;}
+.m-tab-label{font-size:10px;font-weight:500;}
+
+/* ── 공통 컴포넌트 ── */
+.section{display:none;}
+.section.active{display:block;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px;}
+.card-title{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;}
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.stat-num{font-size:24px;font-weight:600;font-family:var(--mono);line-height:1;margin-bottom:4px;}
+.stat-label{font-size:11px;color:var(--text-muted);}
+.ocr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.ocr-field{background:var(--bg);border-radius:var(--rs);padding:10px 12px;}
+@media(min-width:700px){.ocr-field{background:white;}}
+.ocr-key{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.ocr-val{font-size:12px;font-weight:500;font-family:var(--mono);color:var(--text);}
+.status-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--rs);font-size:13px;margin-bottom:10px;}
+.status-bar.success{background:var(--green-light);color:var(--green-dark);}
+.status-bar.warning{background:var(--amber-light);color:#92600A;}
+.status-bar.loading{background:var(--bg);color:var(--text-muted);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:var(--rs);font-size:14px;font-weight:500;cursor:pointer;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);transition:all .15s;font-family:inherit;-webkit-tap-highlight-color:transparent;}
+.btn:active{opacity:.7;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-primary{background:var(--green);border-color:var(--green);color:white;}
+.btn-primary:hover{background:var(--green-dark);}
+.btn-full{width:100%;justify-content:center;}
+.btn-sm{padding:8px 14px;font-size:13px;}
+.btn-group{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:699px){.form-grid{grid-template-columns:1fr;}}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+.form-group label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;}
+.form-group input,.form-group select,.form-group textarea{padding:12px 14px;border:1px solid var(--border-strong);border-radius:var(--rs);font-size:15px;font-family:inherit;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--green);}
+.form-group textarea{min-height:100px;resize:vertical;line-height:1.6;}
+.claim-list{display:flex;flex-direction:column;}
+.claim-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.claim-row:last-child{border-bottom:none;}
+.claim-row:active{opacity:.7;}
+.claim-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.claim-dot.red{background:var(--red);}.claim-dot.amber{background:var(--amber);}.claim-dot.green{background:var(--green);}
+.claim-info{flex:1;min-width:0;}
+.claim-title{font-size:14px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.claim-sub{font-size:12px;color:var(--text-muted);font-family:var(--mono);}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;white-space:nowrap;}
+.badge-red{background:var(--red-light);color:var(--red);}
+.badge-amber{background:var(--amber-light);color:#92600A;}
+.badge-green{background:var(--green-light);color:var(--green-dark);}
+.badge-gray{background:var(--bg);color:var(--text-muted);}
+.detail-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.meta-item{background:var(--bg);padding:10px 12px;border-radius:var(--rs);}
+.meta-key{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+.meta-val{font-size:13px;font-weight:500;}
+.evidence-box{border:1px solid var(--border);border-radius:var(--rs);padding:14px;display:flex;align-items:center;gap:12px;margin-top:10px;}
+.evidence-box.matched{border-color:var(--green-mid);background:var(--green-light);}
+.evidence-box.no-match{border-color:var(--amber);background:var(--amber-light);}
+.report-body{font-size:14px;line-height:1.9;white-space:pre-wrap;background:var(--bg);border-radius:var(--rs);padding:16px;border-left:3px solid var(--green);max-height:360px;overflow-y:auto;}
+.report-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{font-size:11px;font-family:var(--mono);padding:4px 10px;border-radius:20px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border);}
+.notif{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-120%);background:var(--text);color:white;padding:12px 18px;border-radius:var(--rs);font-size:13px;display:flex;align-items:center;gap:10px;z-index:200;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;max-width:90vw;}
+.notif.show{transform:translateX(-50%) translateY(0);}
+.notif-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.receipt-img{width:100%;max-width:260px;border-radius:var(--rs);border:1px solid var(--border);display:block;margin:0 auto;}
+/* 모바일에서 영수증+OCR 세로 배치 */
+.receipt-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;align-items:start;}
+@media(max-width:699px){.receipt-layout{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="notif" id="notif"><div class="notif-dot"></div><span id="notifMsg"></span></div>
+
+<!-- ══════════════ 데스크탑 ══════════════ -->
+<div class="desktop-shell">
+  <aside class="sidebar">
+    <div class="logo-wrap">
+      <div class="logo-mark"><img id="d-logo" alt="FactoPack 로고"></div>
+      <div class="logo-name">FactoPack</div>
+      <div class="logo-sub">소상공인 클레임 대응 AI</div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" onclick="navigate('ocr',this)">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 7h6M7 10h6M7 13h4"/></svg>OCR 스캔
+      </button>
+      <button class="nav-item" onclick="navigate('claims',this)">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 7v4M10 13h.01"/></svg>클레임 관리
+      </button>
+      <button class="nav-item" onclick="navigate('report',this)">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h8l4 4v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v4h4M8 13h4M8 10h4M8 7h2"/></svg>소명서 생성
+      </button>
+    </nav>
+    <div class="sidebar-footer"><span class="status-dot"></span>AI 연결됨</div>
+  </aside>
+  <div class="d-main">
+    <header class="topbar">
+      <span class="page-title" id="pageTitle">OCR 스캔</span>
+      <span class="page-badge" id="pageBadge">운송장 / 영수증 인식</span>
+    </header>
+    <div class="d-content" id="d-sections"></div>
+  </div>
+</div>
+
+<!-- ══════════════ 모바일 ══════════════ -->
+<div class="mobile-shell">
+  <header class="m-header">
+    <div class="m-logo">
+      <div class="m-logo-img"><img id="m-logo" alt="FactoPack 로고"></div>
+      <div class="m-logo-name">FactoPack</div>
+    </div>
+    <span class="m-ai-badge">● AI 연결됨</span>
+  </header>
+  <div class="m-content" id="m-sections"></div>
+  <nav class="m-tabbar">
+    <button class="m-tab active" onclick="navigate('ocr',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h5M8 12h8M8 16h5"/></svg>
+      <span class="m-tab-label">OCR 스캔</span>
+    </button>
+    <button class="m-tab" onclick="navigate('claims',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span class="m-tab-label">클레임</span>
+    </button>
+    <button class="m-tab" onclick="navigate('report',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6M9 7h3"/></svg>
+      <span class="m-tab-label">소명서</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+const LOGO_B64 = 'data:image/jpeg;base64,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';
+document.getElementById('d-logo').src = LOGO_B64;
+document.getElementById('m-logo').src = LOGO_B64;
+
+// ── 섹션 HTML ──
+const sectionsHTML = `
+<section id="sec-ocr" class="section active">
+  <div class="stats-strip">
+    <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">등록된 주문</div></div>
+    <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">진행중 클레임</div></div>
+    <div class="stat-card"><div class="stat-num" id="statReports">0</div><div class="stat-label">생성된 소명서</div></div>
+  </div>
+
+  <div id="ocr-step-upload">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:white;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <div style="font-size:15px;font-weight:500;">영수증 / 운송장 업로드</div>
+      </div>
+      <div id="uploadZone" style="position:relative;border:1.5px dashed var(--border-strong);border-radius:var(--r);padding:44px 20px;text-align:center;cursor:pointer;">
+        <input type="file" id="receiptUpload" accept="image/*" onchange="handleUpload(event)"
+          style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:10;">
+        <div style="width:52px;height:52px;background:var(--green-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+          <svg width="26" height="26" fill="none" stroke="var(--green)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        </div>
+        <div id="uploadLabel" style="font-size:15px;font-weight:500;margin-bottom:6px;">탭하여 이미지 올리기</div>
+        <div style="font-size:13px;color:var(--text-muted);">운송장, 영수증 — JPG, PNG</div>
+      </div>
+      <div id="uploadPreviewWrap" style="display:none;margin-top:14px;text-align:center;">
+        <img id="uploadPreviewImg" style="max-height:240px;max-width:100%;border-radius:var(--rs);border:1px solid var(--border);object-fit:contain;" alt="미리보기">
+        <div id="uploadFileName" style="margin-top:8px;font-size:11px;color:var(--text-faint);font-family:var(--mono);"></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-full" id="ocrAnalyzeBtn" onclick="runOCRStep()" disabled>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h4M7 11h8M7 15h6"/></svg>
+          AI OCR 분석 시작
+        </button>
+        <button class="btn btn-sm" id="ocrResetBtn" onclick="resetUpload()" style="display:none;">다시 선택</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ocr-step-loading" style="display:none;">
+    <div class="card" style="text-align:center;padding:48px 20px;">
+      <div style="width:52px;height:52px;border-radius:50%;border:3px solid var(--green-light);border-top-color:var(--green);animation:spin .8s linear infinite;margin:0 auto 20px;"></div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:8px;">AI가 영수증을 분석 중이에요</div>
+      <div style="font-size:13px;color:var(--text-muted);">주문번호, 상품명, 금액 읽는 중...</div>
+    </div>
+  </div>
+
+  <div id="ocr-step-result" style="display:none;">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:15px;font-weight:500;">OCR 인식 완료</div>
+        <button onclick="resetUpload()" style="margin-left:auto;font-size:12px;color:var(--text-muted);background:none;border:none;cursor:pointer;padding:4px 8px;">↩ 다시</button>
+      </div>
+      <div class="receipt-layout">
+        <div>
+          <img id="receiptPreview" class="receipt-img" alt="영수증">
+          <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--text-faint);font-family:var(--mono);" id="receiptFileName"></div>
+        </div>
+        <div class="ocr-grid" style="margin-top:0;">
+          <div class="ocr-field"><div class="ocr-key">포장번호</div><div class="ocr-val">포3216</div></div>
+          <div class="ocr-field"><div class="ocr-key">날짜</div><div class="ocr-val">2026-05-21</div></div>
+          <div class="ocr-field" style="grid-column:1/-1"><div class="ocr-key">주문번호</div><div class="ocr-val" style="font-size:10px;">20260521220218370155</div></div>
+          <div class="ocr-field" style="grid-column:1/-1"><div class="ocr-key">상품</div><div class="ocr-val" style="font-size:11px;">2인엽기떡볶이 착한맛 + 양배추추가 + 모짜치즈</div></div>
+          <div class="ocr-field"><div class="ocr-key">금액</div><div class="ocr-val">12,700원</div></div>
+          <div class="ocr-field"><div class="ocr-key">플랫폼</div><div class="ocr-val">엽떡앱</div></div>
+        </div>
+      </div>
+      <div class="status-bar success" style="margin-top:14px;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+        포3216 · 디지털 봉인 완료 ✓
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="navigate('claims', getMTabs()[1])">클레임 관리로 이동 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sec-claims" class="section">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:500;">클레임 목록</div>
+    <button class="btn btn-sm btn-primary" onclick="openAddClaim()">+ 새 클레임</button>
+  </div>
+  <div class="card">
+    <div id="claimListInner"></div>
+  </div>
+  <div id="claimDetailCard" style="display:none;">
+    <div class="card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:8px;" id="detailTitle"></div>
+          <div id="detailBadges" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+        </div>
+        <button class="btn btn-sm" onclick="closeDetail()">✕</button>
+      </div>
+      <div class="detail-meta" id="detailMeta"></div>
+      <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">고객 주장</div>
+      <div id="detailContent" style="background:var(--bg);border-radius:var(--rs);padding:12px;font-size:14px;line-height:1.7;margin-bottom:16px;"></div>
+      <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">증거 영상 매칭</div>
+      <button class="btn btn-full" id="matchBtn" onclick="matchEvidence()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        봉인 영상 자동 매칭
+      </button>
+      <div id="matchResult" style="margin-top:10px;"></div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-full" onclick="goToReport()">소명서 자동 생성 →</button>
+      </div>
+    </div>
+  </div>
+  <div id="addClaimCard" style="display:none;">
+    <div class="card">
+      <div class="card-title">새 클레임 등록</div>
+      <div class="form-grid">
+        <div class="form-group"><label>주문번호</label><input type="text" id="newOrderNum" placeholder="#1234"></div>
+        <div class="form-group"><label>플랫폼</label>
+          <select id="newPlatform"><option>배달의민족</option><option>쿠팡이츠</option><option>요기요</option><option>엽떡앱</option><option>네이버 스마트스토어</option><option>쿠팡</option></select>
+        </div>
+        <div class="form-group"><label>클레임 유형</label>
+          <select id="newType"><option>음식 누락</option><option>상품 파손</option><option>오배송</option><option>허위 미배달</option><option>상태 불량</option></select>
+        </div>
+        <div class="form-group"><label>날짜</label><input type="date" id="newDate"></div>
+        <div class="form-group full"><label>고객 주장 내용</label><textarea id="newContent" placeholder="내용 입력"></textarea></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveClaim()">등록</button>
+        <button class="btn" onclick="closeAddClaim()">취소</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sec-report" class="section">
+  <div class="card">
+    <div class="card-title">클레임 정보</div>
+    <div class="form-grid">
+      <div class="form-group"><label>주문번호</label><input type="text" id="rOrderNum" placeholder="#1234"></div>
+      <div class="form-group"><label>플랫폼</label>
+        <select id="rPlatform"><option>배달의민족</option><option>쿠팡이츠</option><option>요기요</option><option>엽떡앱</option><option>네이버 스마트스토어</option><option>쿠팡</option></select>
+      </div>
+      <div class="form-group"><label>업종</label>
+        <select id="rBizType"><option>음식 배달</option><option>일반 물류</option></select>
+      </div>
+      <div class="form-group"><label>주문 날짜</label><input type="date" id="rOrderDate"></div>
+      <div class="form-group full"><label>고객 클레임 내용</label><textarea id="rClaimContent" placeholder="고객이 주장하는 내용"></textarea></div>
+      <div class="form-group full"><label>추가 메모 (선택)</label><input type="text" id="rMemo" placeholder="포장 완료 시각, 특이사항 등"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary btn-full" id="genBtn" onclick="generateReport()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        AI 소명서 자동 생성
+      </button>
+    </div>
+  </div>
+  <div id="reportCard" style="display:none;">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div class="card-title" style="margin:0;">AI 소명서</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span class="badge badge-green" id="reportMeta"></span>
+          <button class="btn btn-sm" onclick="copyReport()">복사</button>
+          <button class="btn btn-sm" onclick="downloadReport()">저장</button>
+        </div>
+      </div>
+      <div id="reportLoading" class="status-bar loading"><div style="width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;"></div><span>AI가 소명서를 작성 중...</span></div>
+      <div id="reportBody" class="report-body" style="display:none;"></div>
+      <div id="reportTags" class="report-tags" style="display:none;"></div>
+    </div>
+  </div>
+</section>
+`;
+
+// 두 컨테이너에 동일한 HTML 삽입
+document.getElementById('d-sections').innerHTML = sectionsHTML;
+document.getElementById('m-sections').innerHTML = sectionsHTML;
+
+// ── 탭/섹션 전환 ──
+const pageMeta = {
+  ocr:    {title:'OCR 스캔',    badge:'운송장 / 영수증 인식'},
+  claims: {title:'클레임 관리', badge:'클레임 목록 및 증거 매칭'},
+  report: {title:'소명서 생성', badge:'AI 자동 소명서 작성'},
+};
+
+function getDNavItems(){ return document.querySelectorAll('.desktop-shell .nav-item'); }
+function getMTabs(){     return document.querySelectorAll('.m-tab'); }
+
+function navigate(page, btn) {
+  // 데스크탑 nav
+  getDNavItems().forEach(n => n.classList.remove('active'));
+  // 모바일 탭
+  getMTabs().forEach(t => t.classList.remove('active'));
+  // 어느 쪽 버튼이든 같은 인덱스의 상대편도 활성화
+  const allNavs = [...getDNavItems()];
+  const allTabs = [...getMTabs()];
+  const pages = ['ocr','claims','report'];
+  const idx = pages.indexOf(page);
+  if(idx >= 0){ allNavs[idx]?.classList.add('active'); allTabs[idx]?.classList.add('active'); }
+  else { btn?.classList.add('active'); }
+
+  // 두 컨테이너 모두 섹션 전환
+  ['d-sections','m-sections'].forEach(cid => {
+    const c = document.getElementById(cid);
+    if(!c) return;
+    c.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const target = c.querySelector('#sec-' + page);
+    if(target) target.classList.add('active');
+  });
+
+  const pt = document.getElementById('pageTitle');
+  const pb = document.getElementById('pageBadge');
+  if(pt) pt.textContent = pageMeta[page].title;
+  if(pb) pb.textContent = pageMeta[page].badge;
+  if(page === 'claims') renderClaimList();
+}
+
+function showNotif(msg){
+  const el = document.getElementById('notif');
+  document.getElementById('notifMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── 공유 상태 ──
+const ORDERS = [{
+  id:'20260521220218370155', shortId:'포3216',
+  product:'2인엽기떡볶이 착한맛 + 양배추추가 + 모짜치즈',
+  platform:'엽떡앱', date:'2026-05-21', amount:'12,700원', sealed:true
+}];
+const CLAIMS = [{
+  id:'CL-001', orderNum:'20260521220218370155', shortId:'포3216',
+  platform:'엽떡앱', type:'음식 누락',
+  content:'모짜치즈를 추가로 주문했는데 배달된 음식에 모짜치즈가 없었어요. 추가금 3,000원을 냈는데 환불해달라고요.',
+  date:'2026-05-21', status:'미처리'
+}];
+let reportCount = 0, selectedClaim = null, currentReport = '', uploadedImageSrc = '';
+
+// ── OCR ──
+function handleUpload(e){
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    uploadedImageSrc = ev.target.result;
+    qAll('#uploadPreviewImg').forEach(el => el.src = ev.target.result);
+    qAll('#uploadPreviewWrap').forEach(el => el.style.display = 'block');
+    qAll('#uploadFileName').forEach(el => el.textContent = file.name);
+    qAll('#ocrAnalyzeBtn').forEach(el => el.disabled = false);
+    qAll('#ocrResetBtn').forEach(el => el.style.display = 'inline-flex');
+    qAll('#uploadLabel').forEach(el => el.textContent = '이미지가 선택됐어요');
+  };
+  reader.readAsDataURL(file);
+}
+
+function runOCRStep(){
+  const fname = q('#uploadFileName')?.textContent || '';
+  qAll('#ocr-step-upload').forEach(el => el.style.display='none');
+  qAll('#ocr-step-loading').forEach(el => el.style.display='block');
+  setTimeout(() => {
+    qAll('#ocr-step-loading').forEach(el => el.style.display='none');
+    qAll('#ocr-step-result').forEach(el => el.style.display='block');
+    qAll('#receiptPreview').forEach(el => el.src = uploadedImageSrc);
+    qAll('#receiptFileName').forEach(el => el.textContent = fname);
+  }, 1800);
+}
+
+function resetUpload(){
+  uploadedImageSrc = '';
+  qAll('#receiptUpload').forEach(el => el.value='');
+  qAll('#uploadPreviewWrap').forEach(el => el.style.display='none');
+  qAll('#uploadLabel').forEach(el => el.textContent='탭하여 이미지 올리기');
+  qAll('#uploadFileName').forEach(el => el.textContent='');
+  qAll('#ocrAnalyzeBtn').forEach(el => el.disabled=true);
+  qAll('#ocrResetBtn').forEach(el => el.style.display='none');
+  qAll('#ocr-step-loading').forEach(el => el.style.display='none');
+  qAll('#ocr-step-result').forEach(el => el.style.display='none');
+  qAll('#ocr-step-upload').forEach(el => el.style.display='block');
+}
+
+// ── 클레임 ──
+function renderClaimList(){
+  const colMap = {'미처리':'red','처리중':'amber','처리완료':'green'};
+  const html = CLAIMS.length === 0
+    ? '<div style="text-align:center;padding:32px;color:var(--text-faint);font-size:14px;">등록된 클레임이 없어요</div>'
+    : '<div class="claim-list">' + CLAIMS.map((c,i) =>
+        `<div class="claim-row" onclick="selectClaim(${i})">
+          <div class="claim-dot ${colMap[c.status]||'gray'}"></div>
+          <div class="claim-info">
+            <div class="claim-title">${c.type} · ${c.shortId||c.orderNum}</div>
+            <div class="claim-sub">${c.platform} · ${c.date}</div>
+          </div>
+          <span class="badge badge-${colMap[c.status]||'gray'}">${c.status}</span>
+        </div>`
+      ).join('') + '</div>';
+  qAll('#claimListInner').forEach(el => el.innerHTML = html);
+}
+
+function selectClaim(i){
+  selectedClaim = CLAIMS[i]; const c = selectedClaim;
+  const colMap = {'미처리':'red','처리중':'amber','처리완료':'green'};
+  qAll('#claimDetailCard').forEach(el => el.style.display='block');
+  qAll('#addClaimCard').forEach(el => el.style.display='none');
+  qAll('#detailTitle').forEach(el => el.textContent = `${c.type} — ${c.shortId||c.orderNum}`);
+  qAll('#detailBadges').forEach(el => el.innerHTML =
+    `<span class="badge badge-${colMap[c.status]||'gray'}">${c.status}</span><span class="badge badge-gray">${c.platform}</span>`);
+  qAll('#detailMeta').forEach(el => el.innerHTML = `
+    <div class="meta-item"><div class="meta-key">주문번호</div><div class="meta-val" style="font-size:11px;font-family:var(--mono);">${c.orderNum}</div></div>
+    <div class="meta-item"><div class="meta-key">포장번호</div><div class="meta-val">${c.shortId||'-'}</div></div>
+    <div class="meta-item"><div class="meta-key">플랫폼</div><div class="meta-val">${c.platform}</div></div>
+    <div class="meta-item"><div class="meta-key">날짜</div><div class="meta-val">${c.date}</div></div>`);
+  qAll('#detailContent').forEach(el => el.textContent = c.content);
+  qAll('#matchResult').forEach(el => el.innerHTML='');
+  qAll('#matchBtn').forEach(el => {
+    el.disabled=false;
+    el.innerHTML='<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> 봉인 영상 자동 매칭';
+  });
+}
+
+function closeDetail(){ qAll('#claimDetailCard').forEach(el => el.style.display='none'); selectedClaim=null; }
+
+function openAddClaim(){
+  qAll('#addClaimCard').forEach(el => el.style.display='block');
+  qAll('#claimDetailCard').forEach(el => el.style.display='none');
+  qAll('#newDate').forEach(el => el.value = new Date().toISOString().split('T')[0]);
+}
+function closeAddClaim(){ qAll('#addClaimCard').forEach(el => el.style.display='none'); }
+
+function saveClaim(){
+  const orderNum = q('#newOrderNum')?.value.trim();
+  const content = q('#newContent')?.value.trim();
+  if(!orderNum||!content){ alert('주문번호와 내용을 입력해주세요.'); return; }
+  CLAIMS.push({
+    id:'CL-'+String(CLAIMS.length+1).padStart(3,'0'), orderNum, shortId:orderNum,
+    platform: q('#newPlatform')?.value, type: q('#newType')?.value,
+    date: q('#newDate')?.value, content, status:'미처리'
+  });
+  closeAddClaim(); renderClaimList(); showNotif('클레임이 등록됐어요');
+}
+
+function matchEvidence(){
+  if(!selectedClaim) return;
+  qAll('#matchBtn').forEach(btn => { btn.disabled=true; btn.innerHTML='<div style="width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;"></div> 매칭 중...'; });
+  setTimeout(() => {
+    const c = selectedClaim;
+    const matched = ORDERS.find(o => o.id===c.orderNum || o.shortId===c.shortId);
+    const html = matched
+      ? `<div class="evidence-box matched">
+          <svg width="32" height="32" fill="none" stroke="#1D9E75" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--green-dark);margin-bottom:2px;">봉인 영상 매칭 완료</div>
+          <div style="font-size:12px;color:var(--green-dark);opacity:.8;">${matched.shortId} · 22:02:52 · 타임스탬프+GPS ✓</div></div>
+          <span class="badge badge-green">검증됨</span>
+        </div>`
+      : `<div class="evidence-box no-match">
+          <div><div style="font-size:14px;font-weight:500;color:#92600A;margin-bottom:2px;">매칭 영상 없음</div>
+          <div style="font-size:12px;color:#92600A;opacity:.8;">OCR 탭에서 영수증을 먼저 등록해주세요</div></div>
+        </div>`;
+    qAll('#matchResult').forEach(el => el.innerHTML=html);
+    qAll('#matchBtn').forEach(btn => { btn.disabled=false; btn.innerHTML='<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> 다시 매칭'; });
+  }, 1200);
+}
+
+function goToReport(){
+  if(!selectedClaim) return;
+  qAll('#rOrderNum').forEach(el => el.value = selectedClaim.orderNum);
+  qAll('#rClaimContent').forEach(el => el.value = selectedClaim.content);
+  qAll('#rOrderDate').forEach(el => el.value = selectedClaim.date);
+  qAll('#rPlatform').forEach(el => el.value = selectedClaim.platform);
+  qAll('#rMemo').forEach(el => el.value = '포장번호 포3216 · 포장완료 22:02:52 · 모짜치즈 영수증 확인됨');
+  navigate('report', getMTabs()[2]);
+}
+
+// ── 소명서 ──
+async function generateReport(){
+  const orderNum = q('#rOrderNum')?.value || '20260521220218370155';
+  const platform = q('#rPlatform')?.value;
+  const claim    = q('#rClaimContent')?.value.trim();
+  const biz      = q('#rBizType')?.value;
+  const date     = q('#rOrderDate')?.value;
+  const memo     = q('#rMemo')?.value;
+  if(!claim){ alert('클레임 내용을 입력해주세요.'); return; }
+
+  qAll('#reportCard').forEach(el => el.style.display='block');
+  qAll('#reportLoading').forEach(el => el.style.display='flex');
+  qAll('#reportBody').forEach(el => el.style.display='none');
+  qAll('#reportTags').forEach(el => el.style.display='none');
+  qAll('#genBtn').forEach(el => el.disabled=true);
+
+  const prompt = `당신은 소상공인 클레임 소명 전문가입니다. 아래 정보로 실제 플랫폼 고객센터에 제출할 공식 소명서를 작성하세요.
+
+[주문 정보 — OCR 확인 영수증]
+- 포장번호: 포3216 / 주문번호: ${orderNum}
+- 플랫폼: ${platform} / 주문일시: 2026-05-21 22:02:52
+- 상품: 2인엽기떡볶이 착한맛(9,000원) + 양배추추가(1,000원) + 모짜치즈(3,000원)
+- 결제: 12,700원 (엽떡앱 포인트 300원 차감)
+- FactoPack 디지털 봉인: 타임스탬프 22:02:52 + GPS 암호화 완료
+${memo ? '- 추가 메모: ' + memo : ''}
+
+[고객 클레임]
+${claim}
+
+소명서 작성: 제목 → 인사말 → 사실관계(OCR 영수증 증거 활용) → FactoPack 봉인 영상 명시 → 반박 → 클레임 기각 요청 → 마무리. 700자 내외, 소명서 본문만 출력.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+    });
+    const data = await res.json();
+    currentReport = data.content[0].text;
+    reportCount++;
+    qAll('#statReports').forEach(el => el.textContent=reportCount);
+    qAll('#reportLoading').forEach(el => el.style.display='none');
+    qAll('#reportBody').forEach(el => { el.style.display='block'; el.textContent=currentReport; });
+    qAll('#reportMeta').forEach(el => el.textContent=`${platform} · 포3216`);
+    qAll('#reportTags').forEach(el => {
+      el.style.display='flex';
+      el.innerHTML=['#포장완료22:02','#OCR확인','#모짜치즈포함','#디지털봉인','#타임스탬프'].map(t=>`<span class="tag">${t}</span>`).join('');
+    });
+    showNotif('소명서가 생성됐어요');
+  } catch(e){
+    qAll('#reportLoading').forEach(el => el.innerHTML='<span style="color:var(--red);">생성 실패. 다시 시도해주세요.</span>');
+  }
+  qAll('#genBtn').forEach(el => el.disabled=false);
+}
+
+function copyReport(){
+  if(!currentReport) return;
+  navigator.clipboard.writeText(currentReport).then(() => showNotif('소명서가 복사됐어요'));
+}
+function downloadReport(){
+  if(!currentReport) return;
+  const blob = new Blob([currentReport],{type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='FactoPack_소명서_포3216.txt'; a.click();
+  showNotif('소명서가 저장됐어요');
+}
+
+// ── 헬퍼: 두 컨테이너에서 모두 선택 ──
+function q(sel){ return document.querySelector('.mobile-shell ' + sel) || document.querySelector('.desktop-shell ' + sel); }
+function qAll(sel){
+  const isMobile = window.innerWidth < 700;
+  if(isMobile) return document.querySelectorAll('.mobile-shell ' + sel);
+  return document.querySelectorAll('.desktop-shell ' + sel);
+}
+
+// ── 초기화 ──
+qAll('#rOrderDate').forEach(el => el.value='2026-05-21');
+renderClaimList();
+</script>
+</body>
+</html>
