@@ -14,216 +14,248 @@ html, body {
   font-family: 'Pretendard', -apple-system, sans-serif;
   overflow: hidden;
 }
-
-/* 목업 */
 .phone {
-  position: relative;
-  width: 360px;
-  height: 780px;
-  background: #111;
-  border-radius: 48px;
+  position: relative; width: 360px; height: 780px;
+  background: #111; border-radius: 48px;
   box-shadow: 0 0 0 2px #444, 0 0 0 4px #222, 0 40px 120px rgba(0,0,0,.9);
   flex-shrink: 0;
 }
 .phone::before {
-  content: '';
-  position: absolute; left: -3px; top: 110px;
-  width: 3px; height: 30px;
-  background: #333; border-radius: 2px 0 0 2px;
+  content: ''; position: absolute; left: -3px; top: 110px;
+  width: 3px; height: 30px; background: #333; border-radius: 2px 0 0 2px;
   box-shadow: 0 42px 0 #333, 0 76px 0 #333;
 }
 .phone::after {
-  content: '';
-  position: absolute; right: -3px; top: 150px;
-  width: 3px; height: 56px;
-  background: #333; border-radius: 0 2px 2px 0;
+  content: ''; position: absolute; right: -3px; top: 150px;
+  width: 3px; height: 56px; background: #333; border-radius: 0 2px 2px 0;
 }
 .island {
   position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-  width: 110px; height: 30px;
-  background: #111; border-radius: 18px;
+  width: 110px; height: 30px; background: #111; border-radius: 18px;
   z-index: 30; pointer-events: none;
 }
 .statusbar {
   position: absolute; top: 0; left: 0; right: 0; height: 50px;
   display: flex; align-items: flex-end; justify-content: space-between;
-  padding: 0 26px 8px;
-  z-index: 25; pointer-events: none;
+  padding: 0 26px 8px; z-index: 25; pointer-events: none;
   color: #1a1a1a; font-size: 14px; font-weight: 700;
 }
+.statusbar.light { color: #fff; }
 .screen-wrap {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 47px;
-  overflow: hidden;
-  background: #fff;
-  z-index: 10;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 47px; overflow: hidden; background: #fff; z-index: 10;
 }
-
-/* 앱 화면들 */
 .s { display: none; flex-direction: column; width: 100%; height: 100%; overflow: hidden; }
 .s.on { display: flex; }
 .scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
-/* 공통 컴포넌트 */
 .btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 15px; border-radius: 100px;
   font-size: 15px; font-weight: 600; border: none; cursor: pointer;
   font-family: inherit;
 }
-.btn:active { opacity: .75; }
+.btn:active { opacity: .8; }
 .g { background: #3ECFA0; color: #fff; }
-.kakao { background: #FEE500; color: #3C1E1E; }
-.google { background: #fff; color: #1a1a1a; border: 1.5px solid #e5e5e5; }
-.apple { background: #000; color: #fff; }
-.gray { background: #f0f0f0; color: #888; }
-.outline { background: #fff; color: #1a1a1a; border: 1.5px solid #e5e5e5; }
+.outline { background: #fff; color: #555; border: 1.5px solid #e5e5e5; }
+.dark-btn { background: #1a1a1a; color: #fff; }
 .red-btn { background: #F24E4E; color: #fff; }
 
 .topnav { display: flex; align-items: center; padding: 50px 18px 14px; gap: 10px; flex-shrink: 0; }
-.back { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; }
-.ntitle { font-size: 16px; font-weight: 600; }
+.back { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; flex-shrink: 0; }
+.ntitle { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+
 .tabbar { display: flex; border-top: 1px solid #eee; flex-shrink: 0; background: #fff; }
-.tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 0; gap: 3px; border: none; background: none; cursor: pointer; color: #bbb; font-size: 9px; font-weight: 600; font-family: inherit; }
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 0 13px; gap: 3px; border: none; background: none; cursor: pointer; color: #ccc; font-size: 9px; font-weight: 600; font-family: inherit; }
 .tab.on { color: #3ECFA0; }
 .tab svg { width: 20px; height: 20px; }
+
 .card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 10px; border: 1px solid #f0f0f0; }
-.field { margin-bottom: 12px; }
-.field label { display: block; font-size: 11px; font-weight: 600; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .04em; }
-.field input, .field select, .field textarea { width: 100%; padding: 12px 13px; border: 1.5px solid #e5e5e5; border-radius: 11px; font-size: 14px; font-family: inherit; outline: none; -webkit-appearance: none; background: #fff; }
-.field textarea { min-height: 80px; resize: none; line-height: 1.6; }
-.field input:focus, .field select:focus, .field textarea:focus { border-color: #3ECFA0; }
 .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
 .bg { background: #E1F5EE; color: #0F6E56; }
 .br { background: #FEECEC; color: #F24E4E; }
+
 .modal-bg { position: absolute; inset: 0; background: rgba(0,0,0,.5); z-index: 100; display: none; align-items: center; justify-content: center; border-radius: 47px; }
 .modal-bg.show { display: flex; }
 .modal { background: #fff; border-radius: 22px; width: 88%; padding: 28px 22px; animation: up .3s ease; }
-@keyframes up { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes spin { to { transform: rotate(360deg); } }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 11px; font-weight: 600; color: #aaa; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+.field input, .field select, .field textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #e5e5e5; border-radius: 11px; font-size: 14px; font-family: inherit; outline: none; -webkit-appearance: none; background: #fff; }
+.field textarea { min-height: 80px; resize: none; line-height: 1.6; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #3ECFA0; }
+
+@keyframes up { from{transform:scale(.9);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes spin { to{transform:rotate(360deg)} }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-@keyframes scan { 0%{top:0;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{top:100%;opacity:0} }
+@keyframes scan { 0%{top:-4px;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{top:100%;opacity:0} }
+@keyframes fadeSlide { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
 <body>
 
 <div class="phone">
   <div class="island"></div>
-  <div class="statusbar">
+  <div class="statusbar" id="sb">
     <span>9:41</span>
     <div style="display:flex;align-items:center;gap:5px;">
-      <svg width="16" height="11" viewBox="0 0 16 11" fill="#1a1a1a"><rect x="0" y="2.5" width="2.5" height="8.5" rx=".8"/><rect x="4" y="1.5" width="2.5" height="9.5" rx=".8"/><rect x="8" y="0" width="2.5" height="11" rx=".8"/><rect x="12" y="0" width="2.5" height="11" rx=".8" opacity=".3"/></svg>
-      <svg width="15" height="11" viewBox="0 0 15 11" fill="#1a1a1a"><path d="M7.5 2.2c2.5 0 4.7 1.1 6.2 2.8l1-.9C13 1.9 10.4.7 7.5.7S2 1.9.3 4.1l1 .9C2.8 3.3 5 2.2 7.5 2.2z" opacity=".3"/><path d="M7.5 4.6c1.7 0 3.2.7 4.3 1.9l1-1C11.4 4 9.6 3.1 7.5 3.1S3.6 4 2.2 5.5l1 1C4.3 5.3 5.8 4.6 7.5 4.6z" opacity=".6"/><path d="M7.5 7c1 0 1.8.4 2.4 1l1-1C9.9 6.1 8.8 5.5 7.5 5.5S5.1 6.1 4.1 7l1 1C5.7 7.4 6.5 7 7.5 7z"/><circle cx="7.5" cy="10" r="1.1"/></svg>
-      <svg width="23" height="11" viewBox="0 0 23 11" fill="none"><rect x=".5" y=".5" width="19" height="10" rx="3" stroke="#1a1a1a" stroke-opacity=".35"/><rect x="2" y="2" width="14" height="7" rx="1.5" fill="#1a1a1a"/><path d="M21 3.8v3.4c.8-.3 1.3-.9 1.3-1.7S21.8 4.1 21 3.8z" fill="#1a1a1a" opacity=".4"/></svg>
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="2.5" width="2.5" height="8.5" rx=".8"/><rect x="4" y="1.5" width="2.5" height="9.5" rx=".8"/><rect x="8" y="0" width="2.5" height="11" rx=".8"/><rect x="12" y="0" width="2.5" height="11" rx=".8" opacity=".3"/></svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 2.2c2.5 0 4.7 1.1 6.2 2.8l1-.9C13 1.9 10.4.7 7.5.7S2 1.9.3 4.1l1 .9C2.8 3.3 5 2.2 7.5 2.2z" opacity=".3"/><path d="M7.5 4.6c1.7 0 3.2.7 4.3 1.9l1-1C11.4 4 9.6 3.1 7.5 3.1S3.6 4 2.2 5.5l1 1C4.3 5.3 5.8 4.6 7.5 4.6z" opacity=".6"/><path d="M7.5 7c1 0 1.8.4 2.4 1l1-1C9.9 6.1 8.8 5.5 7.5 5.5S5.1 6.1 4.1 7l1 1C5.7 7.4 6.5 7 7.5 7z"/><circle cx="7.5" cy="10" r="1.1"/></svg>
+      <svg width="23" height="11" viewBox="0 0 23 11" fill="none"><rect x=".5" y=".5" width="19" height="10" rx="3" stroke="currentColor" stroke-opacity=".35"/><rect x="2" y="2" width="14" height="7" rx="1.5" fill="currentColor"/><path d="M21 3.8v3.4c.8-.3 1.3-.9 1.3-1.7S21.8 4.1 21 3.8z" fill="currentColor" opacity=".4"/></svg>
     </div>
   </div>
+
   <div class="screen-wrap">
 
-    <!-- 스플래시 -->
+    <!-- SPLASH -->
     <div class="s on" id="splash" style="background:#3ECFA0;align-items:center;justify-content:center;">
-      <img id="logo0" style="width:72px;height:72px;border-radius:18px;" alt="">
-      <div style="font-size:26px;font-weight:700;color:#0D2B1F;margin-top:14px;">FactoPack</div>
+      <div style="width:80px;height:80px;background:#0D2B1F;border-radius:22px;display:flex;align-items:center;justify-content:center;">
+        <svg width="46" height="46" viewBox="0 0 48 48" fill="none">
+          <rect x="5" y="5" width="18" height="18" rx="3" fill="#3ECFA0"/>
+          <rect x="9" y="9" width="10" height="10" rx="2" fill="#0D2B1F"/>
+          <rect x="25" y="25" width="18" height="18" rx="3" fill="#3ECFA0" opacity=".65"/>
+          <rect x="29" y="29" width="10" height="10" rx="2" fill="#0D2B1F"/>
+        </svg>
+      </div>
+      <div style="font-size:28px;font-weight:700;color:#0D2B1F;margin-top:14px;letter-spacing:-.5px;">FactoPack</div>
     </div>
 
-    <!-- 로그인 -->
-    <div class="s" id="login" style="padding:0 22px;justify-content:center;">
-      <div style="text-align:center;margin-bottom:48px;">
-        <img id="logo1" style="width:64px;height:64px;border-radius:16px;margin-bottom:14px;" alt="">
-        <div style="font-size:26px;font-weight:700;">FactoPack</div>
+    <!-- LOGIN -->
+    <div class="s" id="login" style="padding:0 24px 40px;padding-top:50px;justify-content:space-between;">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+        <div style="width:72px;height:72px;background:#0D2B1F;border-radius:20px;display:flex;align-items:center;justify-content:center;">
+          <svg width="42" height="42" viewBox="0 0 48 48" fill="none">
+            <rect x="5" y="5" width="18" height="18" rx="3" fill="#3ECFA0"/>
+            <rect x="9" y="9" width="10" height="10" rx="2" fill="#0D2B1F"/>
+            <rect x="25" y="25" width="18" height="18" rx="3" fill="#3ECFA0" opacity=".65"/>
+            <rect x="29" y="29" width="10" height="10" rx="2" fill="#0D2B1F"/>
+          </svg>
+        </div>
+        <div style="font-size:24px;font-weight:700;color:#0D2B1F;">FactoPack</div>
+        <div style="font-size:13px;color:#aaa;">AI 클레임 대응 솔루션</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <button class="btn g" onclick="go('ob1')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M20 3H4v1.4L12 11l8-6.6V3zM4 21h16V9.3l-8 6.6-8-6.6V21z"/></svg>
+        <button class="btn" style="background:#03C75A;color:#fff;" onclick="go('ob1')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16.3 10.7L12 4 7.7 10.7H4L12 20l8-9.3h-3.7z"/></svg>
           네이버로 시작하기
         </button>
-        <button class="btn kakao" onclick="go('ob1')">💬 카카오로 시작하기</button>
-        <button class="btn google" onclick="go('ob1')">
+        <button class="btn" style="background:#FEE500;color:#3C1E1E;" onclick="go('ob1')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C7 3 3 6.1 3 10c0 2.6 1.7 4.9 4.3 6.2l-.8 3 3.4-2.2c.7.1 1.4.2 2.1.2 5 0 9-3.1 9-7S17 3 12 3z"/></svg>
+          카카오로 시작하기
+        </button>
+        <button class="btn" style="background:#fff;color:#1a1a1a;border:1.5px solid #e5e5e5;" onclick="go('ob1')">
           <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
           구글로 시작하기
         </button>
-        <button class="btn apple" onclick="go('ob1')"> 애플로 시작하기</button>
+        <button class="btn" style="background:#000;color:#fff;" onclick="go('ob1')">
+          <svg width="15" height="18" viewBox="0 0 15 18" fill="white"><path d="M12.5 9c0-2.6 2.1-3.8 2.2-3.9-1.2-1.7-3-1.9-3.7-2-1.6-.2-3.2.9-4 .9-.8 0-2.1-.9-3.5-.9C1.8 3.2.3 4.3.3 6.7c0 3 2.6 7.4 3.6 7.4.6 0 .9-.5 1.6-.5.8 0 1 .5 1.8.5 1.1 0 3.4-2.4 4-5-.1 0-2.5-1-2.5-3.8z"/><path d="M10.4 2.1C10.9 1.4 11.4.6 11.3-.2c-.7.1-1.6.5-2.2 1.1-.5.5-.9 1.3-.8 2.1.8 0 1.6-.4 2.1-1z"/></svg>
+          Apple로 시작하기
+        </button>
       </div>
     </div>
 
-    <!-- 온보딩1: 업종 -->
+    <!-- ONBOARDING 1 -->
     <div class="s" id="ob1" style="padding:0 22px;">
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-        <div style="display:flex;gap:5px;margin-bottom:36px;">
+      <div style="padding-top:50px;">
+        <div style="display:flex;gap:5px;margin-bottom:0;">
           <div style="flex:1;height:3px;border-radius:9px;background:#3ECFA0;"></div>
           <div style="flex:1;height:3px;border-radius:9px;background:#e5e5e5;"></div>
           <div style="flex:1;height:3px;border-radius:9px;background:#e5e5e5;"></div>
         </div>
-        <div style="font-size:22px;font-weight:700;text-align:center;margin-bottom:32px;line-height:1.4;">사장님이 종사하고 계신<br>업종을 선택해 주세요</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:22px;font-weight:700;text-align:center;margin-bottom:32px;line-height:1.45;color:#1a1a1a;">사장님이 종사하고 계신<br>업종을 선택해 주세요</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;">
-          <div id="b-food" onclick="selBiz('food')" style="border:2px solid #e5e5e5;border-radius:14px;padding:24px 12px;text-align:center;cursor:pointer;">
-            <div style="font-size:32px;margin-bottom:8px;">🍳</div>
-            <div style="font-size:14px;font-weight:600;">요식업</div>
+          <div id="b-food" onclick="selBiz('food')" style="border:2px solid #e5e5e5;border-radius:16px;padding:28px 12px 20px;text-align:center;cursor:pointer;transition:.2s;">
+            <div style="width:52px;height:52px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-8 0v2"/><path d="M12 3a4 4 0 014 4v1H8V7a4 4 0 014-4z"/><path d="M8 8v3a4 4 0 008 0V8"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#1a1a1a;">요식업</div>
           </div>
-          <div id="b-logi" onclick="selBiz('logi')" style="border:2px solid #e5e5e5;border-radius:14px;padding:24px 12px;text-align:center;cursor:pointer;">
-            <div style="font-size:32px;margin-bottom:8px;">📦</div>
-            <div style="font-size:14px;font-weight:600;">물류업</div>
+          <div id="b-logi" onclick="selBiz('logi')" style="border:2px solid #e5e5e5;border-radius:16px;padding:28px 12px 20px;text-align:center;cursor:pointer;transition:.2s;">
+            <div style="width:52px;height:52px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#1a1a1a;">물류업</div>
           </div>
         </div>
       </div>
-      <div style="padding-bottom:32px;">
+      <div style="padding-bottom:36px;">
         <button class="btn g" id="biz-btn" onclick="go('ob2')" style="opacity:.4;" disabled>설정 완료</button>
       </div>
     </div>
 
-    <!-- 온보딩2: 매장 -->
+    <!-- ONBOARDING 2 -->
     <div class="s" id="ob2" style="padding:0 22px;">
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-        <div style="display:flex;gap:5px;margin-bottom:36px;">
+      <div style="padding-top:50px;">
+        <div style="display:flex;gap:5px;">
           <div style="flex:1;height:3px;border-radius:9px;background:#3ECFA0;"></div>
           <div style="flex:1;height:3px;border-radius:9px;background:#3ECFA0;"></div>
           <div style="flex:1;height:3px;border-radius:9px;background:#e5e5e5;"></div>
         </div>
-        <div style="font-size:22px;font-weight:700;text-align:center;margin-bottom:32px;">매장을 등록해주세요</div>
-        <button class="btn g" onclick="go('home')" style="margin-bottom:10px;">🔍 내 매장 검색하기</button>
-        <button class="btn gray" onclick="go('home')">사업자 등록번호로 조회</button>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:22px;font-weight:700;text-align:center;margin-bottom:32px;color:#1a1a1a;">매장을 등록해주세요</div>
+        <button class="btn g" onclick="go('home')" style="margin-bottom:10px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          내 매장 검색하기
+        </button>
+        <button class="btn" style="background:#f5f5f5;color:#888;" onclick="go('home')">사업자 등록번호로 조회</button>
       </div>
     </div>
 
-    <!-- 홈 -->
+    <!-- HOME -->
     <div class="s" id="home">
       <div class="scroll" style="padding:50px 16px 16px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <div style="font-size:18px;font-weight:700;">안녕하세요, 사장님 👋</div>
-          <img id="logo2" style="width:32px;height:32px;border-radius:9px;" alt="">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <div>
+            <div style="font-size:12px;color:#aaa;margin-bottom:3px;">좋은 하루 되세요!</div>
+            <div style="font-size:20px;font-weight:700;color:#1a1a1a;">안녕하세요, 사장님 👋</div>
+          </div>
+          <div style="width:40px;height:40px;background:#0D2B1F;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+              <rect x="5" y="5" width="17" height="17" rx="2.5" fill="#3ECFA0"/>
+              <rect x="8" y="8" width="11" height="11" rx="2" fill="#0D2B1F"/>
+              <rect x="26" y="26" width="17" height="17" rx="2.5" fill="#3ECFA0" opacity=".65"/>
+              <rect x="29" y="29" width="11" height="11" rx="2" fill="#0D2B1F"/>
+            </svg>
+          </div>
         </div>
-        <!-- 클레임 알림 -->
-        <div onclick="showM('m-claim')" style="background:#FEECEC;border:1.5px solid #F24E4E;border-radius:14px;padding:14px 16px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;gap:10px;">
-          <div style="width:34px;height:34px;background:#F24E4E;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div onclick="showM('m-claim')" style="background:#FEECEC;border:1.5px solid #F24E4E;border-radius:14px;padding:14px 16px;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#F24E4E;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
           </div>
           <div style="flex:1;">
-            <div style="font-size:13px;font-weight:600;color:#F24E4E;">새로운 클레임이 접수됐어요</div>
-            <div style="font-size:11px;color:#888;margin-top:2px;">배달의민족 · #1234 · 5월 16일</div>
+            <div style="font-size:13px;font-weight:700;color:#F24E4E;">새로운 클레임이 접수됐어요</div>
+            <div style="font-size:11px;color:#e07070;margin-top:2px;">배달의민족 · #1234 · 5월 16일</div>
           </div>
-          <svg width="14" height="14" fill="none" stroke="#ccc" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          <svg width="14" height="14" fill="none" stroke="#F24E4E" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <!-- 통계 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;">
-          <div class="card" style="text-align:center;padding:12px 6px;">
-            <div style="font-size:20px;font-weight:700;color:#3ECFA0;">1</div>
-            <div style="font-size:10px;color:#888;margin-top:2px;">등록 주문</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+          <div class="card" style="text-align:center;padding:14px 6px;margin:0;">
+            <div style="font-size:22px;font-weight:700;color:#3ECFA0;">1</div>
+            <div style="font-size:10px;color:#aaa;margin-top:3px;font-weight:500;">등록 주문</div>
           </div>
-          <div class="card" style="text-align:center;padding:12px 6px;">
-            <div style="font-size:20px;font-weight:700;color:#F24E4E;">1</div>
-            <div style="font-size:10px;color:#888;margin-top:2px;">클레임</div>
+          <div class="card" style="text-align:center;padding:14px 6px;margin:0;">
+            <div style="font-size:22px;font-weight:700;color:#F24E4E;">1</div>
+            <div style="font-size:10px;color:#aaa;margin-top:3px;font-weight:500;">클레임</div>
           </div>
-          <div class="card" style="text-align:center;padding:12px 6px;">
-            <div style="font-size:20px;font-weight:700;" id="rcnt">0</div>
-            <div style="font-size:10px;color:#888;margin-top:2px;">소명서</div>
+          <div class="card" style="text-align:center;padding:14px 6px;margin:0;">
+            <div style="font-size:22px;font-weight:700;color:#1a1a1a;" id="rcnt">0</div>
+            <div style="font-size:10px;color:#aaa;margin-top:3px;font-weight:500;">소명서</div>
           </div>
         </div>
-        <!-- 바로가기 -->
-        <div class="card" style="padding:12px;">
-          <div style="font-size:11px;font-weight:600;color:#aaa;margin-bottom:10px;">바로가기</div>
+        <div class="card" style="margin:0;">
+          <div style="font-size:11px;font-weight:600;color:#ccc;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;">바로가기</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <button class="btn gray" style="border-radius:11px;padding:12px;font-size:13px;" onclick="goTab('scan')">📸 OCR 스캔</button>
-            <button class="btn gray" style="border-radius:11px;padding:12px;font-size:13px;" onclick="goTab('claims')">⚠️ 클레임</button>
+            <button onclick="goTab('scan')" style="background:#f8f8f8;border:none;border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-family:inherit;">
+              <div style="font-size:22px;margin-bottom:6px;">📸</div>
+              <div style="font-size:12px;font-weight:600;color:#1a1a1a;">OCR 스캔</div>
+            </button>
+            <button onclick="goTab('claims')" style="background:#f8f8f8;border:none;border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-family:inherit;">
+              <div style="font-size:22px;margin-bottom:6px;">⚠️</div>
+              <div style="font-size:12px;font-weight:600;color:#1a1a1a;">클레임</div>
+            </button>
           </div>
         </div>
       </div>
@@ -235,63 +267,66 @@ html, body {
       </div>
     </div>
 
-    <!-- OCR 스캔 (카메라) -->
-    <div class="s" id="scan" style="background:#111;">
-      <div style="position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;padding:50px 18px 14px;gap:10px;">
-        <button class="back" onclick="stopCam();goTab('home')"><svg width="22" height="22" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
-        <span id="store-name" style="color:white;font-size:16px;font-weight:600;">멋사네 분식</span>
-        <div id="rec-badge" style="display:none;align-items:center;gap:5px;margin-left:auto;">
+    <!-- OCR SCAN -->
+    <div class="s" id="scan" style="background:#0d0d0d;position:relative;flex-direction:column;">
+      <div style="position:absolute;top:0;left:0;right:0;z-index:20;padding:50px 18px 0;">
+        <div style="display:flex;align-items:center;">
+          <button class="back" onclick="stopCam();goTab('home')"><svg width="22" height="22" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+          <div style="flex:1;text-align:center;color:white;font-size:16px;font-weight:600;margin-right:34px;" id="store-name">멋사네 분식</div>
+        </div>
+        <div id="rec-badge" style="display:none;align-items:center;gap:6px;padding:8px 0 0 44px;">
           <div style="width:7px;height:7px;border-radius:50%;background:#F24E4E;animation:blink 1s infinite;"></div>
           <span id="rec-time" style="color:white;font-size:12px;font-weight:700;font-family:monospace;">REC 00:00</span>
         </div>
+        <div id="ocr-tag-area" style="display:none;flex-wrap:wrap;gap:6px;padding:8px 0 0 44px;"></div>
       </div>
-      <!-- 카메라 영역 -->
-      <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;">
+      <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
         <video id="cam-vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;" autoplay muted playsinline></video>
-        <div id="cam-fb" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
-          <div style="font-size:36px;">📷</div>
-          <div style="color:#aaa;font-size:13px;">카메라 권한을 허용해주세요</div>
+        <div id="cam-fb" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+          <div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;">
+            <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4" fill="none" stroke="white" stroke-width="2"/></svg>
+          </div>
+          <div style="color:rgba(255,255,255,.5);font-size:13px;">카메라 권한을 허용해주세요</div>
         </div>
-        <!-- 스캔 가이드 -->
-        <div style="position:relative;z-index:2;width:72%;aspect-ratio:1.3;border:2.5px dashed #3ECFA0;border-radius:14px;overflow:hidden;">
+        <div id="scan-guide" style="position:relative;z-index:2;width:70%;aspect-ratio:1.3;border:2px dashed #3ECFA0;border-radius:14px;overflow:hidden;">
           <div style="position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#3ECFA0,transparent);animation:scan 2s ease-in-out infinite;"></div>
         </div>
-        <!-- OCR 태그 (녹화중) -->
-        <div id="tag1" style="display:none;position:absolute;top:22%;left:6%;z-index:5;">
-          <div style="background:#3ECFA0;color:#0D2B1F;font-size:11px;font-weight:700;padding:4px 11px;border-radius:18px;">#포3216 기록 중</div>
+        <div id="order-boxes" style="display:none;position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s ease;">
+          <div style="position:absolute;top:32%;left:50%;transform:translateX(-50%);width:60%;height:46%;border:2.5px solid #3ECFA0;border-radius:10px;">
+            <div id="box-tag-1" style="position:absolute;top:-14px;left:10px;background:#3ECFA0;color:#0D2B1F;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;"></div>
+          </div>
         </div>
       </div>
-      <!-- 하단 패널 -->
-      <div style="background:#fff;border-radius:22px 22px 0 0;padding:18px 20px;flex-shrink:0;">
+      <div style="background:#fff;border-radius:22px 22px 0 0;padding:20px;flex-shrink:0;">
+        <div style="width:36px;height:4px;background:#e5e5e5;border-radius:2px;margin:0 auto 16px;"></div>
         <div id="cam-idle">
-          <div style="text-align:center;margin-bottom:14px;font-size:14px;font-weight:500;line-height:1.5;">영수증을 가이드 안에<br>비추면 자동으로 녹화가 시작돼요</div>
-          <button class="btn outline" onclick="startRec()">수동으로 녹화하기</button>
+          <div style="text-align:center;font-size:14px;font-weight:500;color:#1a1a1a;line-height:1.6;margin-bottom:14px;" id="scan-hint">영수증을 가이드 안에<br>비추면 자동으로 녹화가 시작돼요</div>
+          <div id="ocr-status" style="display:none;text-align:center;font-size:12px;color:#3ECFA0;margin-bottom:8px;font-weight:600;"></div>
+          <button class="btn outline" onclick="manualRec()">수동으로 녹화하기</button>
         </div>
         <div id="cam-rec" style="display:none;">
-          <div style="display:flex;gap:8px;margin-bottom:12px;">
-            <div style="background:#3ECFA0;color:#0D2B1F;font-size:11px;font-weight:700;padding:4px 12px;border-radius:18px;">#포3216 주문 기록 중</div>
-          </div>
-          <div style="font-size:12px;color:#888;text-align:center;margin-bottom:12px;">포장이 완료되면 자동으로 녹화가 끝나요</div>
-          <button class="btn" style="background:#222;color:#fff;" onclick="stopRec()">녹화 중지</button>
+          <div id="ocr-tags-rec" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:28px;"></div>
+          <div style="font-size:12px;color:#aaa;text-align:center;margin-bottom:14px;">포장이 완료되면 자동으로 녹화가 끝나요</div>
+          <button class="btn dark-btn" onclick="stopRec()">녹화 중지</button>
         </div>
       </div>
     </div>
 
-    <!-- 클레임 목록 -->
+    <!-- CLAIMS -->
     <div class="s" id="claims">
       <div class="topnav"><span class="ntitle">클레임 관리</span></div>
       <div class="scroll" style="padding:0 16px 16px;">
         <div class="card" style="cursor:pointer;" onclick="go('detail')">
           <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:9px;height:9px;border-radius:50%;background:#F24E4E;flex-shrink:0;"></div>
+            <div style="width:9px;height:9px;border-radius:50%;background:#F24E4E;flex-shrink:0;margin-top:1px;"></div>
             <div style="flex:1;">
-              <div style="font-size:14px;font-weight:600;">음식 누락 · 포3216</div>
-              <div style="font-size:11px;color:#888;margin-top:2px;">엽떡앱 · 2026-05-21</div>
+              <div style="font-size:14px;font-weight:600;color:#1a1a1a;">단무지 누락 · #1234</div>
+              <div style="font-size:11px;color:#aaa;margin-top:3px;">배달의민족 · 2026-05-16</div>
             </div>
             <span class="badge br">미처리</span>
           </div>
         </div>
-        <button class="btn outline" onclick="go('newclaim')" style="margin-top:4px;">+ 새 클레임 등록</button>
+        <button class="btn outline" onclick="go('newclaim')" style="border-radius:12px;padding:13px;">+ 새 클레임 등록</button>
       </div>
       <div class="tabbar">
         <button class="tab" onclick="goTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>홈</button>
@@ -301,99 +336,265 @@ html, body {
       </div>
     </div>
 
-    <!-- 클레임 상세 -->
+    <!-- CLAIM DETAIL -->
     <div class="s" id="detail">
       <div class="topnav">
         <button class="back" onclick="go('claims')"><svg width="22" height="22" fill="none" stroke="#1a1a1a" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
         <span class="ntitle">클레임을 확인하세요</span>
       </div>
-      <div class="scroll" style="padding:0 16px 16px;">
-        <div class="card">
-          <div style="font-size:11px;color:#aaa;margin-bottom:5px;">AI 이슈 요약</div>
-          <div style="font-size:19px;font-weight:700;margin-bottom:10px;">모짜치즈 누락</div>
-          <div style="font-size:12px;color:#888;margin-bottom:12px;">2026.05.21 | 주문번호 #포3216</div>
-          <div style="border-top:1px solid #f0f0f0;padding-top:12px;display:flex;flex-direction:column;gap:7px;">
-            <div style="display:flex;gap:12px;font-size:13px;"><span style="color:#888;width:52px;">플랫폼</span><span style="font-weight:500;">엽떡앱</span></div>
-            <div style="display:flex;gap:12px;font-size:13px;"><span style="color:#888;width:52px;">날짜</span><span style="font-weight:500;">5월 21일 목요일</span></div>
-            <div style="display:flex;gap:12px;font-size:13px;"><span style="color:#888;width:52px;flex-shrink:0;">내용</span><span style="font-weight:500;">모짜치즈를 추가로 주문했는데 없었어요. 환불해달라고요.</span></div>
+      <div class="scroll" style="padding:0 16px 24px;">
+        <div style="background:#f8f8f8;border-radius:16px;padding:16px;margin-bottom:12px;">
+          <div style="font-size:11px;color:#bbb;font-weight:600;margin-bottom:8px;">AI 이슈 요약</div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;">
+            <div style="font-size:20px;font-weight:700;color:#1a1a1a;">단무지 누락</div>
+            <button style="background:#fff;border:1px solid #e5e5e5;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;color:#666;cursor:pointer;font-family:inherit;flex-shrink:0;">원문 링크</button>
+          </div>
+          <div style="font-size:12px;color:#bbb;margin-bottom:14px;">2026.05.16 &nbsp;|&nbsp; 주문번호 #1234</div>
+          <div style="border-top:1px solid #eee;padding-top:12px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:16px;font-size:13px;"><span style="color:#bbb;min-width:52px;">플랫폼</span><span style="font-weight:500;color:#1a1a1a;">배달의 민족</span></div>
+            <div style="display:flex;gap:16px;font-size:13px;"><span style="color:#bbb;min-width:52px;">주문 날짜</span><span style="font-weight:500;color:#1a1a1a;">5월 16일 화요일</span></div>
+            <div style="display:flex;gap:16px;font-size:13px;"><span style="color:#bbb;min-width:52px;flex-shrink:0;">내용</span><span style="font-weight:500;color:#1a1a1a;line-height:1.5;">떡볶이에 단무지가 안 들어있어요. 안 먹었으니까 환불해주세요.</span></div>
           </div>
         </div>
-        <div style="background:#E1F5EE;border-radius:12px;padding:11px 14px;margin-bottom:10px;display:flex;align-items:center;gap:7px;">
-          <svg width="16" height="16" fill="none" stroke="#0F6E56" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+        <div style="background:#E1F5EE;border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <svg width="18" height="18" fill="none" stroke="#3ECFA0" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
           <div style="font-size:13px;font-weight:600;color:#0F6E56;">증거 영상이 매칭되었어요</div>
         </div>
-        <div style="background:#111;border-radius:14px;padding:16px;margin-bottom:10px;color:#fff;">
-          <div style="font-size:13px;font-weight:600;">주문번호 #포3216</div>
-          <div style="font-size:11px;color:#aaa;margin-top:2px;">2026.05.21 22:02</div>
-          <div style="width:44px;height:44px;background:#3ECFA0;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:12px auto;">
-            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div style="background:#111;border-radius:16px;padding:16px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:600;color:#fff;">주문번호 #1234</div>
+          <div style="font-size:11px;color:#666;margin-top:2px;margin-bottom:14px;">2026.05.16 &nbsp;&nbsp;12:15</div>
+          <div style="display:flex;justify-content:center;margin-bottom:10px;">
+            <div style="width:52px;height:52px;background:#1e3a2f;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #3ECFA0;">
+              <svg width="20" height="20" fill="#3ECFA0" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
           </div>
-          <div style="text-align:center;font-size:12px;color:#aaa;">15:48</div>
-          <div style="display:flex;gap:10px;margin-top:10px;">
-            <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#3ECFA0;">✓ 무결성 인증</div>
-            <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#3ECFA0;">✓ 타임스탬프 검증</div>
+          <div style="text-align:center;color:#666;font-size:13px;margin-bottom:12px;">15:48</div>
+          <div style="display:flex;gap:14px;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#3ECFA0;">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              블록체인 대조 완료
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#3ECFA0;">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              GPS, 타임스탬프 검증 완료
+            </div>
           </div>
         </div>
-        <button class="btn g" onclick="go('report')">AI 소명 리포트 확인</button>
+        <button class="btn g" onclick="go('report');genReport()">AI 소명 리포트 확인</button>
       </div>
     </div>
 
-    <!-- 소명서 -->
+    <!-- REPORT -->
     <div class="s" id="report">
-      <div class="topnav">
-        <button class="back" onclick="go('detail')"><svg width="22" height="22" fill="none" stroke="#1a1a1a" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
-        <span class="ntitle">소명서 생성</span>
+      <div class="topnav" style="justify-content:space-between;">
+        <span class="ntitle">분석 결과</span>
+        <span style="font-size:12px;color:#aaa;font-weight:500;">주문번호 #1234</span>
       </div>
-      <div class="scroll" style="padding:0 16px 16px;">
-        <div id="rform">
-          <div class="field"><label>주문번호</label><input id="r-order" value="20260521220218370155"></div>
-          <div class="field"><label>플랫폼</label><select id="r-plat"><option>엽떡앱</option><option>배달의민족</option><option>쿠팡이츠</option><option>요기요</option></select></div>
-          <div class="field"><label>클레임 내용</label><textarea id="r-claim">모짜치즈를 추가로 주문했는데 배달된 음식에 없었어요. 추가금 3,000원을 냈는데 환불해달라고요.</textarea></div>
-          <div class="field"><label>추가 메모</label><input id="r-memo" value="포장번호 포3216 · 포장완료 22:02:52"></div>
-          <button class="btn g" onclick="genReport()">✏️ AI 소명서 자동 생성</button>
+      <div class="scroll" style="padding:0 16px 24px;">
+        <div id="rload" style="text-align:center;padding:52px 0;">
+          <div style="width:48px;height:48px;border-radius:50%;border:3px solid #E1F5EE;border-top-color:#3ECFA0;animation:spin .8s linear infinite;margin:0 auto 16px;"></div>
+          <div style="font-weight:600;font-size:15px;color:#1a1a1a;">AI가 분석 중이에요</div>
+          <div style="font-size:12px;color:#aaa;margin-top:6px;" id="rload-sub">증거 영상을 판독하고 있어요...</div>
         </div>
-        <div id="rload" style="display:none;text-align:center;padding:36px 0;">
-          <div style="width:44px;height:44px;border-radius:50%;border:3px solid #E1F5EE;border-top-color:#3ECFA0;animation:spin .8s linear infinite;margin:0 auto 14px;"></div>
-          <div style="font-weight:600;font-size:14px;">AI가 소명서를 작성 중이에요</div>
-        </div>
-        <div id="rresult" style="display:none;">
-          <div style="background:#E1F5EE;border:1px solid #3ECFA0;border-radius:14px;padding:16px;margin-bottom:12px;">
-            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
-              <svg width="18" height="18" fill="none" stroke="#0F6E56" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
-              <div style="font-size:16px;font-weight:700;color:#0F6E56;">누락 없음</div>
+        <div id="rresult" style="display:none;animation:fadeSlide .4s ease;">
+          <div style="background:#E1F5EE;border:1.5px solid #3ECFA0;border-radius:16px;padding:16px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <svg width="20" height="20" fill="none" stroke="#3ECFA0" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                <div style="font-size:18px;font-weight:700;color:#0F6E56;">누락 없음</div>
+              </div>
+              <button style="background:#fff;border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;color:#0F6E56;cursor:pointer;font-family:inherit;">▶ 영상 보기</button>
             </div>
-            <div style="font-size:12px;color:#0F6E56;margin-bottom:8px;">AI 객체 인식 정확도 98.7%</div>
-            <div style="background:#fff;border-radius:9px;padding:10px 12px;margin-top:6px;font-size:13px;display:flex;justify-content:space-between;">확인된 구성품 수 5개 <span style="color:#3ECFA0;">✓</span></div>
-            <div style="background:#fff;border-radius:9px;padding:10px 12px;margin-top:6px;font-size:13px;display:flex;justify-content:space-between;">요청 사항 준수 <span style="color:#3ECFA0;">✓</span></div>
-            <div style="background:#fff;border-radius:9px;padding:10px 12px;margin-top:6px;font-size:13px;display:flex;justify-content:space-between;">상품 품질 상태 <span style="color:#3ECFA0;">✓</span></div>
+            <div style="font-size:11px;color:#3ECFA0;font-weight:500;margin-bottom:12px;">AI 객체 인식 정확도 98.7%</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="background:#fff;border-radius:10px;padding:10px 14px;font-size:13px;color:#1a1a1a;">확인된 구성품 수 5개</div>
+              <div style="background:#fff;border-radius:10px;padding:10px 14px;font-size:13px;display:flex;justify-content:space-between;align-items:center;color:#1a1a1a;">요청 사항 준수<svg width="18" height="18" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2" fill="none"/></svg></div>
+              <div style="background:#fff;border-radius:10px;padding:10px 14px;font-size:13px;display:flex;justify-content:space-between;align-items:center;color:#1a1a1a;">상품 품질 상태<svg width="18" height="18" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2" fill="none"/></svg></div>
+            </div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-            <div style="font-size:15px;font-weight:700;">AI 소명서</div>
-            <button onclick="copyR()" style="font-size:12px;background:#f0f0f0;border:none;border-radius:8px;padding:5px 10px;cursor:pointer;font-family:inherit;">복사</button>
+          <!-- AI 소명서 card -->
+          <div style="border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);">
+            <div style="background:linear-gradient(135deg,#0D2B1F 0%,#1a5940 100%);padding:15px 18px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:30px;height:30px;background:rgba(62,207,160,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                  <svg width="15" height="17" viewBox="0 0 15 19" fill="none"><rect x="1" y="1" width="13" height="17" rx="2.5" stroke="#3ECFA0" stroke-width="1.5"/><circle cx="7.5" cy="7" r="1.8" fill="#3ECFA0"/><line x1="3.5" y1="11.5" x2="11.5" y2="11.5" stroke="#3ECFA0" stroke-width="1.5" stroke-linecap="round"/><line x1="3.5" y1="14" x2="9" y2="14" stroke="#3ECFA0" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <span style="font-size:16px;font-weight:700;color:#fff;">AI 소명서</span>
+              </div>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);">초안 편집 가능</span>
+            </div>
+            <div style="background:#fff;border:1px solid #eee;border-top:none;border-radius:0 0 16px 16px;padding:16px;">
+              <div style="display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:12px;color:#bbb;min-width:30px;padding-top:1px;flex-shrink:0;">판정</span>
+                <span style="font-size:13px;font-weight:600;color:#1a1a1a;">이물질 혼입 없음 · 클레임 부당</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+                <div style="display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;">
+                  <svg width="13" height="13" fill="none" stroke="#bbb" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+                  <span style="font-size:11px;color:#888;font-family:monospace;white-space:nowrap;">12:15:23 – 12:15:45</span>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span style="font-size:11px;color:#0F6E56;background:#E1F5EE;border:1px solid #3ECFA0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">떡볶이 <svg width="9" height="9" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" fill="none"/></svg></span>
+                    <span style="font-size:11px;color:#0F6E56;background:#E1F5EE;border:1px solid #3ECFA0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">김밥 <svg width="9" height="9" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" fill="none"/></svg></span>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;">
+                  <svg width="13" height="13" fill="none" stroke="#bbb" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+                  <span style="font-size:11px;color:#888;font-family:monospace;white-space:nowrap;">12:15:45 – 12:17:01</span>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span style="font-size:11px;color:#0F6E56;background:#E1F5EE;border:1px solid #3ECFA0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">김치 <svg width="9" height="9" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" fill="none"/></svg></span>
+                    <span style="font-size:11px;color:#0F6E56;background:#E1F5EE;border:1px solid #3ECFA0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">단무지 <svg width="9" height="9" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" fill="none"/></svg></span>
+                    <span style="font-size:11px;color:#0F6E56;background:#E1F5EE;border:1px solid #3ECFA0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">국물 <svg width="9" height="9" fill="#3ECFA0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" fill="none"/></svg></span>
+                  </div>
+                </div>
+              </div>
+              <textarea id="rtext" style="width:100%;background:#fff;border:none;font-size:13px;line-height:1.75;height:115px;resize:none;font-family:inherit;color:#333;outline:none;overflow-y:auto;"></textarea>
+              <div style="border-top:1px solid #f0f0f0;padding-top:10px;display:flex;align-items:center;gap:6px;">
+                <svg width="12" height="12" fill="none" stroke="#bbb" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                <span style="font-size:11px;color:#bbb;">무결성이 검증 완료 (해시값 8a2fc4e...9b6d2a5f)</span>
+              </div>
+            </div>
           </div>
-          <div id="rtext" style="background:#f5f5f5;border-radius:12px;padding:14px;font-size:13px;line-height:1.8;margin-bottom:10px;max-height:180px;overflow-y:auto;"></div>
-          <div style="background:#fff;border:1.5px solid #e5e5e5;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <div style="width:32px;height:32px;background:#E1F5EE;border-radius:8px;display:flex;align-items:center;justify-content:center;">🎥</div>
-            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">주문번호 #포3216</div><div style="font-size:11px;color:#888;">1.95 MB · MP4</div></div>
+          <div style="background:#fff;border:1.5px solid #e5e5e5;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+            <div style="width:40px;height:40px;background:#E1F5EE;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" fill="#3ECFA0" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" fill="#3ECFA0"/></svg>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a;">주문번호 #1234</div>
+              <div style="font-size:11px;color:#aaa;margin-top:1px;">1.95 MB &nbsp;&nbsp; MP4</div>
+            </div>
+            <button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:18px;line-height:1;padding:4px;">×</button>
           </div>
+          <button class="btn outline" style="margin-bottom:14px;border-radius:12px;font-size:14px;">+ 파일 추가하기</button>
           <button class="btn g" onclick="showM('m-send')">플랫폼에 원클릭 전송</button>
         </div>
       </div>
-      <div class="tabbar">
-        <button class="tab" onclick="goTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>홈</button>
-        <button class="tab" onclick="goTab('scan')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M8 18v4M16 18v4M2 8h4M18 8h4M2 16h4M18 16h4"/></svg>OCR</button>
-        <button class="tab" onclick="goTab('claims')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>클레임</button>
-        <button class="tab on" onclick="goTab('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>소명서</button>
+    </div>
+
+    <!-- STATUS -->
+    <div class="s" id="status">
+      <div class="topnav">
+        <button class="back" onclick="go('report')"><svg width="22" height="22" fill="none" stroke="#1a1a1a" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+        <span class="ntitle">처리 진행 현황</span>
+      </div>
+      <div class="scroll" style="padding:0 16px 16px;">
+        <!-- receipt card -->
+        <div style="background:#E1F5EE;border-radius:16px;padding:16px;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <svg width="17" height="17" fill="none" stroke="#3ECFA0" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="#3ECFA0" stroke="#3ECFA0"/></svg>
+            <div style="font-size:15px;font-weight:700;color:#0F6E56;">소명 접수 완료</div>
+          </div>
+          <div style="font-size:12px;color:#0F6E56;margin-bottom:12px;">배달의민족에 소명서가 성공적으로 전달되었습니다!</div>
+          <div style="background:#fff;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;font-size:13px;gap:14px;">
+              <span style="color:#3ECFA0;font-weight:600;min-width:56px;">접수번호</span>
+              <span style="color:#1a1a1a;font-weight:500;">CLM-20240528</span>
+            </div>
+            <div style="display:flex;font-size:13px;gap:14px;">
+              <span style="color:#3ECFA0;font-weight:600;min-width:56px;">전송일시</span>
+              <span style="color:#1a1a1a;font-weight:500;">2026-05-17 오후 2:34</span>
+            </div>
+          </div>
+        </div>
+        <!-- customer center link -->
+        <div style="text-align:right;font-size:12px;color:#bbb;margin-bottom:10px;display:flex;align-items:center;justify-content:flex-end;gap:4px;cursor:pointer;">
+          고객 센터 바로가기
+          <svg width="13" height="13" fill="none" stroke="#bbb" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><polyline points="10 9 15 9 15 14"/><line x1="9" y1="15" x2="15" y2="9"/></svg>
+        </div>
+        <!-- progress card -->
+        <div style="background:#f8f8f8;border-radius:16px;padding:16px;">
+          <div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:3px;">검토 진행 중</div>
+          <div style="font-size:12px;color:#bbb;padding-bottom:14px;border-bottom:1px solid #eee;margin-bottom:14px;">예상 처리 1~3 영업일 &nbsp;|&nbsp; 주문번호 #1234</div>
+          <!-- completed: 소명서 전송 완료 -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;background:#3ECFA0;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div style="width:2px;flex:1;background:#3ECFA0;min-height:18px;"></div>
+            </div>
+            <div style="padding-bottom:14px;display:flex;align-items:baseline;justify-content:space-between;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a;">소명서 전송 완료</div>
+              <div style="font-size:11px;color:#bbb;">오늘 오후 2:34</div>
+            </div>
+          </div>
+          <!-- completed: 플랫폼 접수 확인 -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;background:#3ECFA0;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div style="width:2px;flex:1;background:#3ECFA0;min-height:18px;"></div>
+            </div>
+            <div style="padding-bottom:14px;display:flex;align-items:baseline;justify-content:space-between;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a;">플랫폼 접수 확인</div>
+              <div style="font-size:11px;color:#bbb;">오늘 오후 2:35</div>
+            </div>
+          </div>
+          <!-- completed: 담당자 배정 -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;background:#3ECFA0;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div style="width:2px;flex:1;background:#3ECFA0;min-height:18px;"></div>
+            </div>
+            <div style="padding-bottom:14px;display:flex;align-items:baseline;justify-content:space-between;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a;">담당자 배정</div>
+              <div style="font-size:11px;color:#bbb;">오늘 오후 4:12</div>
+            </div>
+          </div>
+          <!-- in-progress: 소명 내용 검토 중 -->
+          <div style="display:flex;gap:12px;margin-bottom:4px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;border:2.5px solid #3ECFA0;border-top-color:transparent;border-radius:50%;animation:spin .9s linear infinite;flex-shrink:0;"></div>
+              <div style="width:2px;flex:1;background:#e5e5e5;min-height:18px;"></div>
+            </div>
+            <div style="flex:1;padding-bottom:14px;">
+              <div style="background:#f0fdf8;border-radius:10px;padding:10px 12px;">
+                <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">소명 내용 검토 중</div>
+                <div style="display:inline-flex;align-items:center;gap:5px;background:#E1F5EE;border-radius:20px;padding:3px 10px;margin-bottom:8px;">
+                  <div style="width:6px;height:6px;background:#3ECFA0;border-radius:50%;"></div>
+                  <span style="font-size:11px;font-weight:600;color:#0F6E56;">진행 중</span>
+                </div>
+                <div style="font-size:12px;color:#888;line-height:1.6;">AI 소명서 및 영상 증거를 담당자가 검토하고 있습니다.<br>업데이트 시 알림을 보내드립니다.</div>
+              </div>
+            </div>
+          </div>
+          <!-- pending: 결과 통보 -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;background:#e5e5e5;border-radius:50%;flex-shrink:0;"></div>
+              <div style="width:2px;flex:1;background:#e5e5e5;min-height:18px;"></div>
+            </div>
+            <div style="padding-bottom:14px;">
+              <div style="font-size:13px;font-weight:600;color:#bbb;">결과 통보</div>
+              <div style="font-size:11px;color:#ccc;margin-top:2px;">대기 중</div>
+            </div>
+          </div>
+          <!-- pending: 처리 완료 -->
+          <div style="display:flex;gap:12px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:22px;height:22px;background:#e5e5e5;border-radius:50%;flex-shrink:0;"></div>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#bbb;">처리 완료</div>
+              <div style="font-size:11px;color:#ccc;margin-top:2px;">대기 중</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:0 16px 36px;flex-shrink:0;">
+        <button class="btn g">고객 센터 전화 연결</button>
       </div>
     </div>
 
-    <!-- 새 클레임 -->
+    <!-- NEW CLAIM -->
     <div class="s" id="newclaim">
       <div class="topnav">
         <button class="back" onclick="go('claims')"><svg width="22" height="22" fill="none" stroke="#1a1a1a" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
         <span class="ntitle">새 클레임 등록</span>
       </div>
-      <div class="scroll" style="padding:0 16px 16px;">
+      <div class="scroll" style="padding:0 16px 24px;">
         <div class="field"><label>주문번호</label><input placeholder="#1234"></div>
         <div class="field"><label>플랫폼</label><select><option>배달의민족</option><option>쿠팡이츠</option><option>요기요</option><option>엽떡앱</option></select></div>
         <div class="field"><label>클레임 유형</label><select><option>음식 누락</option><option>상품 파손</option><option>오배송</option><option>허위 미배달</option></select></div>
@@ -403,150 +604,283 @@ html, body {
       </div>
     </div>
 
-    <!-- 모달: 클레임 알림 -->
+    <!-- MODAL: 클레임 알림 -->
     <div class="modal-bg" id="m-claim" onclick="if(event.target===this)hideM('m-claim')">
-      <div class="modal" style="text-align:center;">
-        <div style="width:44px;height:44px;background:#FEECEC;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-          <svg width="22" height="22" fill="#F24E4E" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <div class="modal">
+        <div style="text-align:center;margin-bottom:18px;">
+          <div style="width:48px;height:48px;background:#FEECEC;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+            <svg width="24" height="24" fill="#F24E4E" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:#1a1a1a;line-height:1.4;">새로운 클레임이<br>접수되었어요</div>
         </div>
-        <div style="font-size:19px;font-weight:700;margin-bottom:14px;">새로운 클레임이<br>접수되었어요</div>
-        <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-bottom:18px;text-align:left;display:flex;flex-direction:column;gap:7px;">
-          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#F24E4E;font-weight:600;">플랫폼</span><span>배달의민족</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#F24E4E;font-weight:600;">주문번호</span><span>#1234</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#F24E4E;font-weight:600;">날짜</span><span>5월 16일 화요일</span></div>
+        <div style="border-top:1px solid #f0f0f0;padding-top:14px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:#f8f8f8;border-radius:10px;padding:10px 12px;">
+            <div style="font-size:10px;font-weight:600;color:#F24E4E;margin-bottom:3px;">플랫폼</div>
+            <div style="font-size:13px;font-weight:600;color:#1a1a1a;">배달의 민족</div>
+          </div>
+          <div style="background:#f8f8f8;border-radius:10px;padding:10px 12px;">
+            <div style="font-size:10px;font-weight:600;color:#F24E4E;margin-bottom:3px;">주문 번호</div>
+            <div style="font-size:13px;font-weight:600;color:#1a1a1a;">#1234</div>
+          </div>
+          <div style="background:#f8f8f8;border-radius:10px;padding:10px 12px;grid-column:span 2;">
+            <div style="font-size:10px;font-weight:600;color:#F24E4E;margin-bottom:3px;">주문 날짜</div>
+            <div style="font-size:13px;font-weight:600;color:#1a1a1a;">5월 16일 화요일</div>
+          </div>
         </div>
-        <button class="btn red-btn" onclick="hideM('m-claim');go('detail')" style="margin-bottom:8px;">자세히</button>
-        <button onclick="hideM('m-claim')" style="background:none;border:none;color:#888;font-size:13px;cursor:pointer;width:100%;padding:7px;">지금 안 보기</button>
+        <button class="btn red-btn" onclick="hideM('m-claim');go('detail')" style="margin-bottom:10px;">자세히</button>
+        <button onclick="hideM('m-claim')" style="background:none;border:none;width:100%;padding:8px;font-size:13px;color:#aaa;cursor:pointer;font-family:inherit;">지금 안 보기</button>
       </div>
     </div>
 
-    <!-- 모달: 디지털 봉인 -->
+    <!-- MODAL: 디지털 봉인 -->
     <div class="modal-bg" id="m-seal" onclick="if(event.target===this)hideM('m-seal')">
       <div class="modal" style="text-align:center;">
-        <div style="width:54px;height:54px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-          <svg width="26" height="26" fill="none" stroke="#3ECFA0" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <div style="width:56px;height:56px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+          <svg width="28" height="28" fill="none" stroke="#3ECFA0" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </div>
-        <div style="font-size:20px;font-weight:700;margin-bottom:8px;">디지털 봉인 완료</div>
+        <div style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">디지털 봉인 완료</div>
         <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:14px;">타임스탬프가 결합된 위변조 방지 영상이<br>암호화되어 클라우드에 저장되었습니다.</div>
-        <div style="background:#f5f5f5;border-radius:9px;padding:9px 12px;font-size:11px;font-family:monospace;color:#888;margin-bottom:18px;">해시값: 8a2fc4e...9b6d2a5f</div>
+        <div style="background:#f5f5f5;border-radius:9px;padding:9px 12px;font-size:11px;font-family:monospace;color:#888;margin-bottom:20px;">해시값: 8a2fc4e...9b6d2a5f</div>
         <button class="btn g" onclick="hideM('m-seal');goTab('claims')">확인</button>
       </div>
     </div>
 
-    <!-- 모달: 전송 완료 -->
+    <!-- MODAL: 전송 완료 -->
     <div class="modal-bg" id="m-send" onclick="if(event.target===this)hideM('m-send')">
       <div class="modal" style="text-align:center;">
-        <div style="width:54px;height:54px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-          <svg width="26" height="26" fill="none" stroke="#3ECFA0" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+        <div style="width:56px;height:56px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+          <svg width="28" height="28" fill="none" stroke="#3ECFA0" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
         </div>
-        <div style="font-size:20px;font-weight:700;margin-bottom:8px;">소명서 전송 완료</div>
-        <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:18px;">증거 영상과 AI 소명 리포트가<br>성공적으로 전달되었습니다.<br>고객센터에서 내용을 확인해보세요.</div>
-        <button class="btn g" onclick="hideM('m-send')" style="margin-bottom:8px;">플랫폼 고객센터 확인하기</button>
-        <button onclick="hideM('m-send')" style="background:#f0f0f0;border:none;border-radius:100px;width:100%;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">닫기</button>
+        <div style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">소명서 전송 완료</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:20px;">증거 영상과 AI 소명 리포트가<br>성공적으로 전달되었습니다.<br>고객센터에서 내용을 확인해보세요.</div>
+        <button class="btn g" onclick="hideM('m-send');go('status')" style="margin-bottom:8px;">처리 현황 보기</button>
+        <button onclick="hideM('m-send')" style="background:#f0f0f0;border:none;border-radius:100px;width:100%;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;color:#555;">닫기</button>
       </div>
     </div>
 
-  </div><!-- screen-wrap -->
-</div><!-- phone -->
+  </div>
+</div>
 
 <script>
-const LOGO = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABkAGgDASIAAhEBAxEB/8QAGwABAAMBAQEBAAAAAAAAAAAAAAYHCAUEAwL/xABBEAAABQICAwkNBwUAAAAAAAAAAQIDBAUGBxESFyEIMTY3VFZ1lLITFBhBUWFxdKSxw9HTFiI1c5Gz0jJVkqHB/8QAGwEAAQUBAQAAAAAAAAAAAAAAAAECAwQGBQf/xAAyEQABAwICBgcJAQAAAAAAAAABAAIDBBEFIRITMVFxsQYVFjJTkdEiMzRBYYGSoeEU/9oADAMBAAIRAxEAPwCdntPMwAA1eIoACNXZfdq2pMah1+q95vvN91bT3u65mnMyzzQky3yMKATsT4opJXaMbSTuGakoCA65MOOcfsUj6Ya5MOOcfsUj6YXQduVnq2s8J34n0U+AQHXJhxzj9ikfTDXJhxzj9ikfTBoO3I6trPCd+J9FPgEB1yYcc4/YpH0xKrYuCkXLSyqdEl99RDWaCc7mpH3i3yyURH/oBaRtCjlo6iFulIwgfUELqAABqroAABCAA4t9VGTSLMrFUhKSmTEhuvNGpOZEpKTMsy8YUZp0bDI8MG05LqzJMeHFdlS322GGkmtxxxRJSlJb5mZ7wyFjHdaLwup2px9LvNtao8XSLIzbSSdvmzM1Ky848t14g3NdDRM1uWUhgjzJlOk23n5TSkyIz85jwUKnzK9LhUql0pqRLkPLShslLyLYnMzPS2ERbTM/ILDGaOZW9wnB+riZpjd36A+a4QDS1uYC2+1CQqvyHZMsyzUmItTbaT8haWZn6dnoHV1G2Dyaf1owutapX9JqFrrC5+yyoA1XqNsHk0/rRhqNsHk0/rRg1zU3tRRbneX9WVBqncycV7frj3/B+tRtg8mn9aMTWz7bpdqUYqTSEOoik4pwicXpHmrf2hkkgcLBcjGsapq2m1Ud73BzH9XYAAECyiAAAQgjWKnFtcfRr/YMSURrFTi2uPo1/sGHN2hT0nv2cRzWLBoLcnUuOqDV6ytslSEOlGbUZbUpMiUrL05J/QZ9GktydwPq3SHw0izL3V6D0icW0DrfTmrmAAFReboACNYpPvxcOq9IjPOMPNwnFIcbUaVJPLfIy2kYUC5T4o9ZI1m82UlAYh+1t1c5q1153+Qfa26uc1a687/ITak71quycviDyW3gFe4DXYi5LKYjSJSnanT0kzJ7ovSWot9CzM9p5lsz8pGLCEJFjZZipp3U8ron7QgAARQoI1ipxbXH0a/2DElEaxU4trj6Nf7BhzdoU9J79nEc1iwaS3J3A+rdIfDSM2jSW5O4H1bpD4aRZl7q9A6SfAO4jmrmFeYwYmN2GcKMzTu/5stKlklTmghtBHlmZ5GZmZ+LzGLDGcN1lwqo/qKu2YrxgF1isbgtLHVVjY5RcZ8l9/CIqnNqH1hXyH0i4tzb8kIs2TRo8Jmsn3muQ28alNEvZpERlkeQosSnCPjNt319v3iwWNAvZbSbB6KGN0jI7EAkZnaPurg8Helc5ZvV0/MPB3pXOWb1dPzF3gINY7esZ17iHifoeixkuoybGvmemiypjUmnSnYpPJdSROpQs0/eSaTIyPRI8jzGicEb+qF9QKi5UIceO5CU2glMmf39IlbTI97+kZqxH4w7k6WlfvKFy7kf8OuH85j3LEsgGjdafHKeKTD9e4e2A3P55kK9AABWWCQRrFTi2uPo1/sGJKI1ipxbXH0a/wBgw5u0Kek9+ziOaxYNJbk7gfVukPhpGbRpLcncD6t0h8NIsy91egdJPgHcRzVzDOG6z4U0f1FXbMaPEYv6xLfvViOistPE5HM+5PML0HEke+WeRkZHkW+Qrsdom5WKwisZR1TZZNmaxcJThHxm276+37xe+oKyeV1rrDf8B461hXbdj0mVd1HfqTlQpDZy46ZDqVNmtO0tIiSRmXoMhOZWnJa+TpBRzsMTL3dkMvmclcgDMGv29uSUTq7n1A1+3tySidXc+oItU5Z7szXfTzUFxH4w7k6WlfvKFy7kf8OuH85j3LFb2patdxLuudLjxozCHnjkzZSiUTTSnD0jIizzM8zPJP6n4xo7DOwqdYsGSxClSJLks0KfW5kSc0keWiXiLae+ZiSRw0bLtY7WQx0X+Un27Ny4WUuAAFZYVByrwpbtbtWqUdl1DTk2K4wha89FJqSZZnkOqAVOY8scHDaFnDwebg/v1M/wc+QtTBmyJtjUObT50yPKXIk92SpkjIiLRIsjz9AnYBzpHOFiulVYzV1cZilNxwCAABi5aDhYgU2XWbJrFKgpSuTKiLaaSpWiRqMtm3xDugFGSfG8xvDxtGayjqQxA5DD62gNSGIHIYfW0DVwCXXOWg7UVu5vkfVRfCy2ztWyIFKdaQiWSO6SjSeek6e/t8eRZF6CISgAERNzdcCaV00hkdtJugAARRoAABCAAAQgAAEIAABCAAAQgAAEIAABC//Z';
-['logo0','logo1','logo2'].forEach(id => { const el=document.getElementById(id); if(el) el.src=LOGO; });
+const GEMINI_KEY = 'AIzaSyB5TI4lMp3pOvYxrM2PtPWXCb3V_5stEkI';
+let bizType = 'food';
+let stream = null, recInt = null, recS = 0, isRec = false, autoT = null;
 
-// 화면 전환
+// ── Gemini API ──────────────────────────────────────
+async function callGemini(prompt, imageBase64 = null) {
+  const parts = [];
+  if (imageBase64) parts.push({ inlineData: { mimeType: 'image/jpeg', data: imageBase64 } });
+  parts.push({ text: prompt });
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts }] }) }
+    );
+    const d = await res.json();
+    return d.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+  } catch { return null; }
+}
+
+async function captureFrame() {
+  const v = document.getElementById('cam-vid');
+  if (!v.srcObject || !v.videoWidth) return null;
+  const c = document.createElement('canvas');
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext('2d').drawImage(v, 0, 0);
+  return c.toDataURL('image/jpeg', 0.7).split(',')[1];
+}
+
+// ── Navigation ──────────────────────────────────────
 function go(id) {
   document.querySelectorAll('.s').forEach(s => s.classList.remove('on'));
   const t = document.getElementById(id);
-  if (t) { t.classList.add('on'); t.querySelector('.scroll')?.scrollTo(0,0); }
+  if (t) { t.classList.add('on'); t.querySelector('.scroll')?.scrollTo(0, 0); }
+  document.getElementById('sb').classList.toggle('light', id === 'scan');
 }
 
-// 탭 전환
 function goTab(tab) {
   if (tab !== 'scan') stopCam();
-  const map = { home:'home', scan:'scan', claims:'claims', report:'report' };
-  go(map[tab]);
+  go(tab);
   if (tab === 'scan') startCam();
 }
 
-// 모달
 function showM(id) { document.getElementById(id).classList.add('show'); }
 function hideM(id) { document.getElementById(id).classList.remove('show'); }
 
-// 업종 선택
+// ── Onboarding ──────────────────────────────────────
 function selBiz(type) {
-  ['food','logi'].forEach(b => {
-    const el = document.getElementById('b-'+b);
-    el.style.borderColor = b===type ? '#3ECFA0' : '#e5e5e5';
-    el.style.background = b===type ? '#E1F5EE' : '#fff';
+  bizType = type;
+  ['food', 'logi'].forEach(b => {
+    const el = document.getElementById('b-' + b);
+    el.style.borderColor = b === type ? '#3ECFA0' : '#e5e5e5';
+    el.style.background  = b === type ? '#f0fdf8' : '#fff';
+    el.querySelector('div div').style.background = b === type ? '#E1F5EE' : '#f5f5f5';
+    el.querySelector('svg').setAttribute('stroke', b === type ? '#3ECFA0' : '#888');
   });
   const btn = document.getElementById('biz-btn');
   btn.disabled = false; btn.style.opacity = '1';
-  document.getElementById('store-name').textContent = type==='food' ? '멋사네 분식' : '멋사 패션';
+  document.getElementById('store-name').textContent = type === 'food' ? '멋사네 분식' : '멋사 패션';
+  document.getElementById('scan-hint').innerHTML = type === 'food'
+    ? '영수증을 가이드 안에<br>비추면 자동으로 녹화가 시작돼요'
+    : '운송장을 가이드 안에<br>비추면 자동으로 녹화가 시작돼요';
+  document.getElementById('box-tag-1').textContent = '';
 }
 
-// 카메라
-let stream=null, recInt=null, recS=0, isRec=false, autoT=null;
-
+// ── Camera & OCR ────────────────────────────────────
 async function startCam() {
   const v = document.getElementById('cam-vid');
   const fb = document.getElementById('cam-fb');
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video:{facingMode:'environment'}, audio:false });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
     v.srcObject = stream; v.style.display = 'block'; fb.style.display = 'none';
-  } catch(e) { fb.style.display = 'flex'; }
-  autoT = setTimeout(() => { if(!isRec) { document.getElementById('tag1').style.display='block'; setTimeout(startRec, 800); }}, 3000);
+  } catch { fb.style.display = 'flex'; }
+
+  autoT = setTimeout(async () => {
+    if (isRec) return;
+    const st = document.getElementById('ocr-status');
+    st.style.display = 'block'; st.textContent = 'AI가 주문번호를 인식하는 중...';
+    const frame = await captureFrame();
+    let orderNum = null;
+    if (frame) {
+      const res = await callGemini(
+        `이 이미지에서 영수증이나 운송장의 주문번호(포장번호)를 찾아주세요. 주문번호만 짧게 답해주세요 (예: #포3216). 없으면 "없음"이라고만 답해주세요.`,
+        frame
+      );
+      if (res && res !== '없음' && res.length < 20) orderNum = res;
+    }
+    st.style.display = 'none';
+    startRec(orderNum || (bizType === 'food' ? '#포3216' : '#배3001'));
+  }, 3000);
 }
 
 function stopCam() {
-  if(stream) { stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
   clearTimeout(autoT); clearInterval(recInt);
-  isRec=false; recS=0;
-  document.getElementById('rec-badge').style.display='none';
-  document.getElementById('cam-idle').style.display='block';
-  document.getElementById('cam-rec').style.display='none';
-  document.getElementById('tag1').style.display='none';
-  document.getElementById('cam-vid').style.display='none';
+  isRec = false; recS = 0;
+  const els = ['rec-badge','cam-rec','order-boxes','ocr-tag-area'];
+  els.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+  document.getElementById('cam-idle').style.display = 'block';
+  document.getElementById('scan-guide').style.display = '';
+  document.getElementById('ocr-tags-rec').innerHTML = '';
+  document.getElementById('ocr-tag-area').innerHTML = '';
+  document.getElementById('cam-vid').style.display = 'none';
+  document.getElementById('ocr-status').style.display = 'none';
 }
 
-function startRec() {
-  isRec=true; recS=0;
-  document.getElementById('cam-idle').style.display='none';
-  document.getElementById('cam-rec').style.display='block';
-  document.getElementById('rec-badge').style.display='flex';
+async function manualRec() {
+  const st = document.getElementById('ocr-status');
+  st.style.display = 'block'; st.textContent = 'AI가 주문번호를 인식하는 중...';
+  const frame = await captureFrame();
+  let orderNum = null;
+  if (frame) {
+    const res = await callGemini(
+      `이 이미지에서 영수증이나 운송장의 주문번호를 찾아주세요. 주문번호만 답해주세요. 없으면 "없음".`,
+      frame
+    );
+    if (res && res !== '없음' && res.length < 20) orderNum = res;
+  }
+  st.style.display = 'none';
+  startRec(orderNum || (bizType === 'food' ? '#포3216' : '#배3001'));
+}
+
+function startRec(orderNum) {
+  if (isRec) return;
+  isRec = true; recS = 0;
+  document.getElementById('cam-idle').style.display = 'none';
+  document.getElementById('cam-rec').style.display = 'block';
+  document.getElementById('scan-guide').style.display = 'none';
+  document.getElementById('rec-badge').style.display = 'flex';
+
+  // 박스+태그 동시에 1초 후 페이드인
+  const orderBoxes = document.getElementById('order-boxes');
+  document.getElementById('box-tag-1').textContent = orderNum;
+  orderBoxes.style.display = 'block';
+  setTimeout(() => { orderBoxes.style.opacity = '1'; }, 1000);
+
+  // 상단 바 태그와 하단 녹화 패널 태그도 동시에
+  setTimeout(() => {
+    const tagArea = document.getElementById('ocr-tag-area');
+    tagArea.style.display = 'flex';
+    const t = document.createElement('div');
+    t.style.cssText = 'background:#3ECFA0;color:#0D2B1F;font-size:11px;font-weight:700;padding:4px 12px;border-radius:18px;';
+    t.textContent = orderNum + ' 기록 중';
+    tagArea.appendChild(t);
+
+    const rt = document.createElement('div');
+    rt.style.cssText = 'background:#3ECFA0;color:#0D2B1F;font-size:11px;font-weight:700;padding:4px 12px;border-radius:18px;';
+    rt.textContent = orderNum + ' 주문 기록 중';
+    document.getElementById('ocr-tags-rec').appendChild(rt);
+  }, 1000);
+
   recInt = setInterval(() => {
     recS++;
-    const m=String(Math.floor(recS/60)).padStart(2,'0');
-    const s=String(recS%60).padStart(2,'0');
-    document.getElementById('rec-time').textContent=`REC ${m}:${s}`;
+    const m = String(Math.floor(recS / 60)).padStart(2, '0');
+    const s = String(recS % 60).padStart(2, '0');
+    document.getElementById('rec-time').textContent = `REC ${m}:${s}`;
   }, 1000);
 }
 
 function stopRec() {
-  clearInterval(recInt); isRec=false;
+  clearInterval(recInt); isRec = false;
   stopCam();
   showM('m-seal');
 }
 
-// 소명서 생성 (데모)
-let reportTxt = '';
-function genReport() {
-  document.getElementById('rform').style.display='none';
-  document.getElementById('rload').style.display='block';
-  document.getElementById('rresult').style.display='none';
-  setTimeout(() => {
-    reportTxt = `[소명서] 엽떡앱 주문번호 20260521220218370155\n작성일: 2026년 5월 21일\n\n안녕하세요. 이번 클레임에 대해 사실 관계를 소명드립니다.\n\n■ 사실 관계\n2026년 5월 21일 22:02:52, 포장번호 포3216 주문을 접수하였습니다. 2인엽기떡볶이 착한맛, 양배추추가, 모짜치즈 전 구성품이 정상 포장되었습니다.\n\n■ 증거 자료\nFactoPack 디지털 봉인 영상(타임스탬프 22:02:52, GPS 암호화, 해시값 8a2fc4e...9b6d2a5f)에서 모짜치즈를 포함한 구성품 5종이 모두 확인됩니다. AI 객체 인식 정확도 98.7%로 누락 없음이 검증되었습니다.\n\n■ 요청 사항\n위 증거를 바탕으로 해당 클레임의 기각 및 환불 거절을 정중히 요청드립니다.\n\n감사합니다.`;
-    document.getElementById('rtext').textContent = reportTxt;
-    document.getElementById('rload').style.display='none';
-    document.getElementById('rresult').style.display='block';
-    document.getElementById('rcnt').textContent = parseInt(document.getElementById('rcnt').textContent)+1;
-  }, 1500);
+// ── AI Report ───────────────────────────────────────
+let reportDone = false;
+
+async function genReport() {
+  if (reportDone) return;
+  document.getElementById('rload').style.display = 'block';
+  document.getElementById('rresult').style.display = 'none';
+
+  const steps = ['증거 영상을 판독하고 있어요...', 'AI가 구성품을 분석하고 있어요...', 'AI 소명서를 작성하고 있어요...'];
+  let si = 0;
+  const subEl = document.getElementById('rload-sub');
+  const stepInt = setInterval(() => { subEl.textContent = steps[Math.min(++si, steps.length - 1)]; }, 1500);
+
+  const prompt = `당신은 소상공인의 블랙컨슈머 클레임 소명을 돕는 AI입니다.
+아래 클레임에 대해 공식 소명서를 작성해주세요.
+
+주문번호: #1234
+플랫폼: 배달의민족
+클레임: 떡볶이에 단무지가 안 들어있어요. 환불해달라고요.
+포장 완료 시각: 2026년 5월 16일 12:15
+증거: FactoPack 디지털 봉인 영상 (AI 객체 인식 정확도 98.7%, 구성품 5종 모두 확인됨, 타임스탬프·무결성 인증 완료)
+
+작성 조건:
+- [소명서] 로 시작, 작성일 포함
+- ■ 사실 관계 / ■ 증거 자료 / ■ 요청 사항 세 섹션
+- 공식적이고 정중한 어조
+- 300~400자`;
+
+  const aiText = await callGemini(prompt);
+  clearInterval(stepInt);
+
+  const fallback = `[소명서] 배달의민족 주문번호 #1234
+작성일: 2026년 5월 16일
+
+■ 사실 관계
+2026년 5월 16일 12:15, 주문번호 #1234 주문을 접수하여 포장을 완료하였습니다. 해당 주문에 포함된 단무지를 포함한 구성품 5종 전체가 정상 포장되었습니다.
+
+■ 증거 자료
+FactoPack 디지털 봉인 영상(AI 객체 인식 정확도 98.7%)에서 구성품 5종이 모두 확인됩니다. 해당 영상은 타임스탬프 및 무결성 인증이 완료된 위변조 불가 파일입니다.
+
+■ 요청 사항
+위 증거를 근거로 해당 클레임의 기각 및 환불 거절을 정중히 요청드립니다.
+
+감사합니다.`;
+
+  document.getElementById('rtext').value = aiText || fallback;
+  document.getElementById('rload').style.display = 'none';
+  document.getElementById('rresult').style.display = 'block';
+  document.getElementById('rcnt').textContent =
+    parseInt(document.getElementById('rcnt').textContent || '0') + 1;
+  reportDone = true;
 }
 
-function copyR() {
-  navigator.clipboard.writeText(reportTxt).then(() => alert('복사됐어요!'));
-}
-
-// 스플래시
+// ── Splash ──────────────────────────────────────────
 setTimeout(() => go('login'), 1800);
 </script>
 </body>
