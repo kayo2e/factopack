@@ -713,10 +713,16 @@ function selBiz(type) {
   bizType = type;
   ['food', 'logi'].forEach(b => {
     const el = document.getElementById('b-' + b);
+    if (!el) return;
+
     el.style.borderColor = b === type ? '#3ECFA0' : '#e5e5e5';
     el.style.background  = b === type ? '#f0fdf8' : '#fff';
-    el.querySelector('div div').style.background = b === type ? '#E1F5EE' : '#f5f5f5';
-    el.querySelector('svg').setAttribute('stroke', b === type ? '#3ECFA0' : '#888');
+
+    const iconWrap = el.querySelector(':scope > div');
+    if (iconWrap) iconWrap.style.background = b === type ? '#E1F5EE' : '#f5f5f5';
+
+    const icon = el.querySelector('svg');
+    if (icon) icon.setAttribute('stroke', b === type ? '#3ECFA0' : '#888');
   });
   const btn = document.getElementById('biz-btn');
   btn.disabled = false; btn.style.opacity = '1';
